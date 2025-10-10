@@ -1,0 +1,13 @@
+{
+  "name": "public",
+  "version": "1.0.0",
+  "description": "Reconstructed package.json created to resolve npm ENOENT errors.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"No tests specified\" && exit 0"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {}
+}
