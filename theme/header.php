@@ -16,7 +16,7 @@
 <html <?php language_attributes(); ?>>
 
 <head>
-	<link rel="stylesheet" href="https://use.typekit.net/TONID.css">
+	<link rel="stylesheet" href="https://use.typekit.net/gvm2slv.css">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anek+Gujarati:wght@300;400;500;600;700&display=swap">
 	<meta charset="<?php bloginfo('charset'); ?>">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
