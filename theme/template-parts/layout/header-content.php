@@ -56,7 +56,7 @@
 <!-- Volet latéral -->
 <div
 	id="sidebar"
-	class="fixed right-0 bottom-0 w-full md:w-[35vw] max-w-md bg-black text-white translate-x-full 
+	class="fixed right-0 bottom-0 w-full md:w-96 bg-black text-white translate-x-full 
            transition-transform duration-300 z-[9999] flex flex-col"
 	style="top: var(--admin-bar-height, 0px);">
 	<!-- Top bar du volet -->
