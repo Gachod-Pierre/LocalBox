@@ -3,20 +3,8 @@
  *
  * https://tailwindcss.com/docs/theme
  */
-
-/**
- * Your theme variables are merged with Tailwind’s defaults, either extending
- * the default theme with new variables or overriding the values of existing
- * variables.
- */
 @theme {
-	/**
-	 * These theme variables use CSS variables set by WordPress using values
-	 * from your `theme.json` file.
-	 *
-	 * If you are using the classic editor, you should use hardcoded color
-	 * values instead of the `var()` functions below.
-     */
+	/* Couleurs basées sur theme.json */
 	--color-background: var(--wp--preset--color--background);
 	--color-foreground: var(--wp--preset--color--foreground);
 	--color-primary: var(--wp--preset--color--primary);
@@ -25,26 +13,46 @@
 	--container-content: var(--wp--style--global--content-size);
 	--container-wide: var(--wp--style--global--wide-size);
 
-	/**
-	 * These are the default `font-family` theme variables included with
-     * Tailwind. You can update them below by adding custom fonts at the
-	 * beginning of each value.
-	 *
-	 * Default theme variables can be found in their entirety at the links
-	 * below, on GitHub or in Tailwind’s documentation, respectively:
-	 *
-	 * https://github.com/tailwindlabs/tailwindcss/blob/main/packages/tailwindcss/theme.css
-	 * https://tailwindcss.com/docs/theme#default-theme-variable-reference
-	 */
+	/* Familles de polices */
+
+	/* Body : Anek Gujarati */
 	--font-sans:
-		ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
-		"Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+		"Anek Gujarati",
+		ui-sans-serif, system-ui, sans-serif,
+		"Apple Color Emoji", "Segoe UI Emoji",
+		"Segoe UI Symbol", "Noto Color Emoji";
+
+	/* Titres : Eight (Adobe) */
+	--font-heading:
+		"eight",
+		"Anek Gujarati",
+		ui-sans-serif, system-ui, sans-serif;
+
+	/* Serif et mono par défaut */
 	--font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
 	--font-mono:
 		ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
 		"Liberation Mono", "Courier New", monospace;
 
+	/* Tailles titres (Eight) */
+	--text-h1: 128px;
+	--text-h2: 96px;
+	--text-h3: 80px;
+	--text-h4: 64px;
+	--text-h5: 48px;
+	--text-h6: 33px;
+	--text-h7: 24px;
+	--text-h8: 20px;
+
+	/* Tailles body (Anek Gujarati) */
+	--text-body1: 32px;
+	--text-body2: 24px;
+	--text-body3: 22px;
+	--text-body4: 20px;
+	--text-body5: 16px;
+
 	/**
 	 * Add your theme below:
 	 */
 }
+

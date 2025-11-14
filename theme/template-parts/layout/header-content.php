@@ -89,13 +89,13 @@
 	</div>
 
 	<!-- Menu principal -->
-	<div class="flex-1 flex flex-col justify-center px-10">
+	<div class="flex-1 flex flex-col justify-start py-[3vh] px-10">
 		<?php
 		wp_nav_menu(
 			array(
-				'theme_location' => 'primary',
+				'theme_location' => 'menu-1',
 				'container'      => false,
-				'menu_class'     => 'flex flex-col gap-6 text-3xl md:text-4xl font-extrabold tracking-wide',
+				'menu_class'     => 'flex flex-col gap-6 text-4xl font-extrabold tracking-wide font-heading',
 				'fallback_cb'    => false,
 			)
 		);
