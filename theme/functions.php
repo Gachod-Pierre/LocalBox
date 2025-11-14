@@ -143,15 +143,35 @@ add_action( 'widgets_init', '_tw_widgets_init' );
 /**
  * Enqueue scripts and styles.
  */
-function _tw_scripts() {
-	wp_enqueue_style( '_tw-style', get_stylesheet_uri(), array(), _TW_VERSION );
-	wp_enqueue_script( '_tw-script', get_template_directory_uri() . '/js/script.min.js', array(), _TW_VERSION, true );
+function _tw_scripts()
+{
+	wp_enqueue_style('_tw-style', get_stylesheet_uri(), array(), _TW_VERSION);
 
-	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
-		wp_enqueue_script( 'comment-reply' );
+	// Script principal généré par esbuild
+	wp_enqueue_script(
+		'_tw-script',
+		get_template_directory_uri() . '/js/script.min.js',
+		array(),
+		_TW_VERSION,
+		true
+	);
+
+	// ⭐ Script du menu (généré par esbuild aussi)
+	wp_enqueue_script(
+		'_tw-menu',
+		get_template_directory_uri() . '/js/menu.min.js',
+		array(),
+		_TW_VERSION,
+		true
+	);
+
+	// Script WordPress (réponse aux commentaires)
+	if (is_singular() && comments_open() && get_option('thread_comments')) {
+		wp_enqueue_script('comment-reply');
 	}
 }
-add_action( 'wp_enqueue_scripts', '_tw_scripts' );
+add_action('wp_enqueue_scripts', '_tw_scripts');
+
 
 /**
  * Enqueue the block editor script.
