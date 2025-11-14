@@ -21,16 +21,20 @@
 		<!-- Zone droite -->
 		<div class="flex items-center gap-6">
 			<!-- Icône box -->
-			<img
-				id="headerBoxIcon"
-				src="<?php echo esc_url(get_template_directory_uri() . '/assets/svg/icon-box.svg'); ?>"
-				alt="Box"
-				class="h-7 w-7 transition-colors duration-200" />
+			<button
+				class="focus:outline-none cursor-pointer"
+				aria-label="Box">
+				<img
+					id="headerBoxIcon"
+					src="<?php echo esc_url(get_template_directory_uri() . '/assets/svg/icon-box.svg'); ?>"
+					alt="Box"
+					class="h-7 w-7 transition-colors duration-200" />
+			</button>
 
 			<!-- Bouton menu -->
 			<button
 				id="menuBtn"
-				class="relative w-8 h-8 flex items-center justify-center focus:outline-none z-50"
+				class="relative w-8 h-8 flex items-center justify-center focus:outline-none z-50 cursor-pointer"
 				aria-expanded="false"
 				aria-controls="sidebar"
 				type="button">
@@ -61,15 +65,19 @@
 	style="top: var(--admin-bar-height, 0px);">
 	<!-- Top bar du volet -->
 	<div class="flex items-center justify-end px-6 h-20 shrink-0 gap-6">
-		<img
-			id="sidebarBoxIcon"
-			src="<?php echo esc_url(get_template_directory_uri() . '/assets/svg/icon-box.svg'); ?>"
-			alt="Box"
-			class="h-7 w-7 opacity-0 pointer-events-none transition-opacity duration-200 brightness-0 invert" />
+		<button
+			class="focus:outline-none cursor-pointer"
+			aria-label="Box">
+			<img
+				id="sidebarBoxIcon"
+				src="<?php echo esc_url(get_template_directory_uri() . '/assets/svg/icon-box.svg'); ?>"
+				alt="Box"
+				class="h-7 w-7 opacity-0 pointer-events-none transition-opacity duration-200 brightness-0 invert" />
+		</button>
 
 		<button
 			id="sidebarCloseBtn"
-			class="focus:outline-none"
+			class="focus:outline-none cursor-pointer"
 			aria-label="Fermer le menu"
 			type="button">
 			<img
