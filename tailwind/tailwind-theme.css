@@ -56,3 +56,76 @@
 	 */
 }
 
+@layer base {
+
+    /* ──────────────────────────────── */
+    /*  MOBILE FIRST (par défaut)       */
+    /* ──────────────────────────────── */
+
+    h1 { @apply font-heading text-h4; }
+    h2 { @apply font-heading text-h5; }
+    h3 { @apply font-heading text-h6; }
+    h4 { @apply font-heading text-h7; }
+    h5 { @apply font-heading text-h8; }
+    h6 { @apply font-heading text-body3; }
+
+    p  { @apply font-sans text-body5; }
+
+
+    /* ──────────────────────────────── */
+    /*  SM ≥ 640px                      */
+    /* ──────────────────────────────── */
+
+    @media (min-width: 640px) {
+        h1 { @apply text-h3; }
+        h2 { @apply text-h4; }
+        h3 { @apply text-h5; }
+        h4 { @apply text-h6; }
+        h5 { @apply text-h7; }
+        h6 { @apply text-h8; }
+
+        p  { @apply text-body4; }
+    }
+
+
+    /* ──────────────────────────────── */
+    /*  MD ≥ 768px                      */
+    /* ──────────────────────────────── */
+
+    @media (min-width: 768px) {
+        h1 { @apply text-h2; }
+        h2 { @apply text-h3; }
+        h3 { @apply text-h4; }
+        h4 { @apply text-h5; }
+        h5 { @apply text-h6; }
+        h6 { @apply text-h7; }
+
+        p  { @apply text-body3; }
+    }
+
+
+    /* ──────────────────────────────── */
+    /*  LG ≥ 1024px                     */
+    /* ──────────────────────────────── */
+
+    @media (min-width: 1024px) {
+        h1 { @apply text-h1; }
+        h2 { @apply text-h2; }
+        h3 { @apply text-h3; }
+        h4 { @apply text-h4; }
+        h5 { @apply text-h5; }
+        h6 { @apply text-h6; }
+
+        p  { @apply text-body2; }
+    }
+
+
+    /* ──────────────────────────────── */
+    /*  XL ≥ 1280px                     */
+    /* ──────────────────────────────── */
+
+    @media (min-width: 1280px) {
+        p { @apply text-body1; }
+    }
+
+}
