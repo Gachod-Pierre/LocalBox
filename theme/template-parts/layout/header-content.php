@@ -105,10 +105,10 @@
 	<!-- Social -->
 	<div class="px-10 pb-10">
 		<p class="text-xs uppercase tracking-[0.2em] text-gray-400 mb-2">Social</p>
-		<div class="flex gap-6 text-sm">
-			<a href="#" class="hover:text-gray-200">Instagram</a>
-			<a href="#" class="hover:text-gray-200">LinkedIn</a>
-			<a href="#" class="hover:text-gray-200">Twitter</a>
+		<div class="flex gap-4 mt-5 text-lg">
+			<a href="#"><img src="<?php echo esc_url(get_template_directory_uri() . '/assets/svg/Insta.svg'); ?>" alt="Instagram"></a>
+			<a href="#"><img src="<?php echo esc_url(get_template_directory_uri() . '/assets/svg/Facebook.svg'); ?>" alt="Facebook"></a>
+			<a href="#"><img src="<?php echo esc_url(get_template_directory_uri() . '/assets/svg/Tiktok.svg'); ?>" alt="TikTok"></a>
 		</div>
 	</div>
 </div>
