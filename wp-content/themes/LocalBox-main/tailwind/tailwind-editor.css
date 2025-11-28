@@ -1,0 +1,58 @@
+/**
+ * Additional styles applied only to the WordPress editor
+ *
+ * It is sometimes necessary to add additional styles for the WordPress block
+ * editor, generally to improve the editor experience. For example, you may
+ * want to tweak the appearance of the title area to better match your site’s
+ * front end, or you may need to change the appearance of a block to better
+ * distinguish between its fields while editing.
+ *
+ * Those styles should be added in this file, and they will be added only to
+ * the block editor.
+ */
+
+/**
+ * Import editor styles from Tailwind Typography fork.
+ */
+@import "@_tw/typography/editor";
+
+/**
+ * Add horizontal padding for smaller screens.
+ */
+.entry-header,
+.entry-content {
+	@apply px-8;
+}
+
+/**
+ * Add your editor styles below:
+ */
+
+@theme {
+	/* Famille body : Anek Gujarati */
+	--font-sans:
+		"Anek Gujarati", ui-sans-serif, system-ui, sans-serif,
+		"Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+		"Noto Color Emoji";
+
+	/* Famille titres : Eight (Adobe) */
+	--font-heading:
+		"eight", "Anek Gujarati", ui-sans-serif, system-ui, sans-serif;
+
+	/* Tailles titres */
+	--text-h1: 128px;
+	--text-h2: 96px;
+	--text-h3: 80px;
+	--text-h4: 64px;
+	--text-h5: 48px;
+	--text-h6: 33px;
+	--text-h7: 24px;
+	--text-h8: 20px;
+
+	/* Tailles body */
+	--text-body1: 32px;
+	--text-body2: 24px;
+	--text-body3: 22px;
+	--text-body4: 20px;
+	--text-body5: 16px;
+}
