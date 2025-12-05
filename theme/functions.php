@@ -156,38 +156,6 @@ function _tw_widgets_init()
 }
 add_action('widgets_init', '_tw_widgets_init');
 
-/**
- * Enqueue scripts and styles.
- */
-function _tw_scripts()
-{
-	wp_enqueue_style('_tw-style', get_stylesheet_uri(), array(), _TW_VERSION);
-
-	// Script principal généré par esbuild
-	wp_enqueue_script(
-		'_tw-script',
-		get_template_directory_uri() . '/js/script.min.js',
-		array(),
-		_TW_VERSION,
-		true
-	);
-
-	// ⭐ Script du menu (généré par esbuild aussi)
-	wp_enqueue_script(
-		'_tw-menu',
-		get_template_directory_uri() . '/js/menu.min.js',
-		array(),
-		_TW_VERSION,
-		true
-	);
-
-	// Script WordPress (réponse aux commentaires)
-	if (is_singular() && comments_open() && get_option('thread_comments')) {
-		wp_enqueue_script('comment-reply');
-	}
-}
-add_action('wp_enqueue_scripts', '_tw_scripts');
-
 
 /**
  * Enqueue the block editor script.
@@ -248,6 +216,94 @@ function _tw_modify_heading_levels($args, $block_type)
 	return $args;
 }
 add_filter('register_block_type_args', '_tw_modify_heading_levels', 10, 2);
+
+
+/**
+ * Enqueue styles & scripts du thème
+ */
+function localbox_enqueue_assets()
+{
+    /* -------------------------
+     *  CSS PRINCIPAL
+     * ------------------------- */
+    wp_enqueue_style(
+        '_tw-style',
+        get_stylesheet_uri(),
+        array(),
+        _TW_VERSION
+    );
+
+
+    /* -------------------------
+     *  JS GÉNÉRÉS PAR ESBUILD
+     * ------------------------- */
+
+    // Script principal
+    wp_enqueue_script(
+        '_tw-script',
+        get_template_directory_uri() . '/js/script.min.js',
+        array(),
+        _TW_VERSION,
+        true
+    );
+
+    // Script du menu
+    wp_enqueue_script(
+        '_tw-menu',
+        get_template_directory_uri() . '/js/menu.min.js',
+        array(),
+        _TW_VERSION,
+        true
+    );
+
+    // Script d'animation du Hero (généré par esbuild)
+    wp_enqueue_script(
+    'localbox-animations',
+    get_template_directory_uri() . '/js/hero-animations.min.js',
+    array('gsap', 'gsap-scrolltrigger'),
+    _TW_VERSION,
+    true
+	);
+
+
+
+    /* -------------------------
+     *  LIBRAIRIES EXTERNES
+     * ------------------------- */
+
+    // GSAP depuis CDN
+	wp_enqueue_script(
+		'gsap',
+		'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js',
+		array(),
+		null,
+		true
+	);
+
+	// ScrollTrigger (dépend de gsap)
+	wp_enqueue_script(
+		'gsap-scrolltrigger',
+		'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js',
+		array('gsap'),
+		null,
+		true
+	);
+
+
+
+    /* -------------------------
+     *  SCRIPTS WORDPRESS
+     * ------------------------- */
+    if (is_singular() && comments_open() && get_option('thread_comments')) {
+        wp_enqueue_script('comment-reply');
+    }
+}
+
+add_action('wp_enqueue_scripts', 'localbox_enqueue_assets');
+
+
+
+
 
 /**
  * Custom template tags for this theme.
