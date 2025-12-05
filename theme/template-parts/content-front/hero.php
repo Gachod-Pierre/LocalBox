@@ -1,11 +1,11 @@
 <section id="hero"
-    class="relative w-full h-[calc(100vh-64px)] overflow-hidden bg-[#f4f0ef] flex items-center justify-center">
+    class="relative w-full h-[calc(100vh-64px)] z-10 bg-[#f4f0ef] flex items-center justify-center">
 
     <!-- CONTENU DU HERO -->
-    <div class="relative z-20 text-center flex flex-col items-center pb-28">
+    <div class="relative text-center flex flex-col items-center pb-28">
 
         <img src="<?php echo get_template_directory_uri(); ?>/assets/svg/main-box.svg"
-            class="main-box w-[clamp(250px,25vw,500px)]" alt="Box">
+            class="main-box relative w-[clamp(250px,25vw,500px)]" alt="Box">
 
         <h1 class="hero-title font-extrabold leading-none text-4xl md:text-5xl lg:text-6xl tracking-tight text-black mt-4">
             LES BOX DE<br>VOS RÉGIONS<br>PRÉFÉRÉES
@@ -33,7 +33,7 @@
 </section>
 
 <!-- WRAPPER EXTERNE DES MASCOTTES (au-dessus du hero) -->
-<div class="pointer-events-none absolute inset-0 z-30 overflow-visible">
+<div class="pointer-events-none absolute inset-0 z-10 overflow-visible">
 
     <!-- MASCOTTE HAUT GAUCHE -->
     <img src="<?php echo get_template_directory_uri(); ?>/assets/svg/mascotte-cheese.svg"

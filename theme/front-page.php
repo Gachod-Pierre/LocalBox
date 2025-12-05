@@ -1,5 +1,13 @@
 <?php get_header(); ?>
 
-<?php get_template_part('template-parts/content-front/hero'); ?>
+<section id="primary">
+    <main id="main">
 
-<?php get_footer(); ?>
+        <?php get_template_part('template-parts/content-front/hero'); ?>
+
+    </main><!-- #main -->
+</section><!-- #primary -->
+
+
+
+<?php get_footer();
