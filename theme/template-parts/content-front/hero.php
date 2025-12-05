@@ -1,52 +1,66 @@
 <section id="hero"
-    class="relative w-full h-[calc(100vh-64px)] overflow-hidden flex flex-col items-center justify-center bg-[#f4f0ef]">
+    class="relative w-full h-[calc(100vh-64px)] overflow-hidden bg-[#f4f0ef] flex items-center justify-center">
 
-    <!-- 🟦 MASCOTTE HAUT GAUCHE -->
-    <img src="<?php echo get_template_directory_uri(); ?>/assets/svg/mascotte-cheese.svg"
-        class="mascotte mascotte-tl
-               absolute top-0 left-[-5vw] md:left-6
-               w-[clamp(130px,18vw,400px)]
-               aspect-[953/1073] object-contain"
-        alt="Mascotte fromage">
+    <!-- CONTENU DU HERO -->
+    <div class="relative z-20 text-center flex flex-col items-center pb-28">
 
-    <!-- 🟩 MASCOTTE HAUT DROITE -->
-    <img src="<?php echo get_template_directory_uri(); ?>/assets/svg/mascotte-oil.svg"
-        class="mascotte mascotte-tr
-               absolute top-0 right-[-7vw] md:right-6
-               w-[clamp(130px,18vw,400px)]
-               aspect-[1060/1600] object-contain"
-        alt="Mascotte huile">
+        <img src="<?php echo get_template_directory_uri(); ?>/assets/svg/main-box.svg"
+            class="main-box w-[clamp(250px,25vw,500px)]" alt="Box">
 
-
-    <div id="hero-content" class="flex flex-col items-center text-center">
-        <img src="<?php echo get_template_directory_uri(); ?>/assets/svg/main-box.svg" 
-            class="main-box w-[clamp(250px,25vw,500px)]"
-            alt="Box">
-
-        <h1 class="hero-title text-center font-extrabold leading-none text-4xl md:text-5xl lg:text-6xl tracking-tight text-black">
+        <h1 class="hero-title font-extrabold leading-none text-4xl md:text-5xl lg:text-6xl tracking-tight text-black mt-4">
             LES BOX DE<br>VOS RÉGIONS<br>PRÉFÉRÉES
         </h1>
 
-        <p class="hero-subtitle mt-4 text-center text-lg md:text-xl text-gray-700">
+        <p class="hero-subtitle mt-4 text-lg md:text-xl text-gray-700">
             Découvrez les produits de nos belles régions françaises
         </p>
+
     </div>
 
+    <!-- VAGUE -->
+    <div class="absolute bottom-[-1px] left-0 w-full overflow-hidden pointer-events-none z-10">
+        <svg class="w-full h-auto" viewBox="0 0 1440 140" xmlns="http://www.w3.org/2000/svg">
+            <path d="
+                M0,40
+                C300,-10 600,120 900,40
+                C1200,-20 1440,40 1440,40
+                L1440,140 L0,140 Z"
+                fill="#EBA440">
+            </path>
+        </svg>
+    </div>
 
-    <!-- 🟥 MASCOTTE BAS GAUCHE -->
+</section>
+
+<!-- WRAPPER EXTERNE DES MASCOTTES (au-dessus du hero) -->
+<div class="pointer-events-none absolute inset-0 z-30 overflow-visible">
+
+    <!-- MASCOTTE HAUT GAUCHE -->
+    <img src="<?php echo get_template_directory_uri(); ?>/assets/svg/mascotte-cheese.svg"
+        class="mascotte mascotte-tl
+               absolute top-[64px] left-[-5vw] md:left-6
+               w-[clamp(130px,18vw,400px)]
+               aspect-[953/1073] object-contain">
+
+    <!-- MASCOTTE HAUT DROITE -->
+    <img src="<?php echo get_template_directory_uri(); ?>/assets/svg/mascotte-oil.svg"
+        class="mascotte mascotte-tr
+               absolute top-[64px] right-[-7vw] md:right-6
+               w-[clamp(130px,18vw,400px)]
+               aspect-[1060/1600] object-contain">
+
+    <!-- MASCOTTE BAS GAUCHE -->
     <img src="<?php echo get_template_directory_uri(); ?>/assets/svg/mascotte-wine.svg"
         class="mascotte mascotte-bl
-               absolute bottom-[-7vh] md:bottom-0 left-[-5vw]
+               absolute bottom-[-7vh] left-[-5vw]
                w-[clamp(150px,23vw,400px)]
-               aspect-[1192/1705] object-contain"
-        alt="Mascotte vin">
+               aspect-[1192/1705] object-contain">
 
-    <!-- 🟨 MASCOTTE BAS DROITE -->
+    <!-- MASCOTTE BAS DROITE -->
     <img src="<?php echo get_template_directory_uri(); ?>/assets/svg/mascotte-macaron.svg"
         class="mascotte mascotte-br
                absolute bottom-[-7vh] right-[-7vw]
                w-[clamp(150px,23vw,400px)]
-               aspect-[1072/1153] object-contain"
-        alt="Mascotte macaron">
+               aspect-[1072/1153] object-contain">
 
-</section>
+</div>
