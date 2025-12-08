@@ -37,28 +37,28 @@
 
     <!-- MASCOTTE HAUT GAUCHE -->
     <img src="<?php echo get_template_directory_uri(); ?>/assets/svg/mascotte-cheese.svg"
-        class="mascotte mascotte-tl
+        class="pointer-events-auto mascotte mascotte-tl
                absolute top-[64px] left-[-5vw] md:left-6
                w-[clamp(130px,18vw,400px)]
                aspect-[953/1073] object-contain">
 
     <!-- MASCOTTE HAUT DROITE -->
     <img src="<?php echo get_template_directory_uri(); ?>/assets/svg/mascotte-oil.svg"
-        class="mascotte mascotte-tr
+        class="pointer-events-auto mascotte mascotte-tr
                absolute top-[64px] right-[-7vw] md:right-6
                w-[clamp(130px,18vw,400px)]
                aspect-[1060/1600] object-contain">
 
     <!-- MASCOTTE BAS GAUCHE -->
     <img src="<?php echo get_template_directory_uri(); ?>/assets/svg/mascotte-wine.svg"
-        class="mascotte mascotte-bl
+        class="pointer-events-auto mascotte mascotte-bl
                absolute bottom-[-7vh] left-[-5vw]
                w-[clamp(150px,23vw,400px)]
                aspect-[1192/1705] object-contain">
 
     <!-- MASCOTTE BAS DROITE -->
     <img src="<?php echo get_template_directory_uri(); ?>/assets/svg/mascotte-macaron.svg"
-        class="mascotte mascotte-br
+        class="pointer-events-auto mascotte mascotte-br
                absolute bottom-[-7vh] right-[-7vw]
                w-[clamp(150px,23vw,400px)]
                aspect-[1072/1153] object-contain">
