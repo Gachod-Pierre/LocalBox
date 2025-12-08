@@ -67,3 +67,21 @@
 .entry-content > .alignright {
 	@apply float-right ml-8;
 }
+
+@layer components {
+	svg .region {
+		cursor: pointer;
+		transition:
+			transform 0.25s ease,
+			opacity 0.25s ease;
+	}
+
+	svg .region:hover {
+		filter: brightness(1.1);
+	}
+
+	.france-card path {
+		stroke: #000;
+		stroke-width: 1px;
+	}
+}
