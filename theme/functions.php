@@ -265,6 +265,15 @@ function localbox_enqueue_assets()
     true
 	);
 
+    // Script pour la section valeurs
+    wp_enqueue_script(
+        'localbox-values',
+        get_template_directory_uri() . '/js/values-scroll.min.js',
+        array(),
+        _TW_VERSION,
+        true
+    );
+
 
 
     /* -------------------------
