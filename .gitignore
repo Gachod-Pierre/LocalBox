@@ -16,3 +16,6 @@ _tw.zip
 
 # Ignore .DS_Store files from macOS:
 .DS_Store
+
+# Ignore WooCommerce plugin directory:
+wp-content/plugins/woocommerce/
