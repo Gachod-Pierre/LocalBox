@@ -22,7 +22,17 @@ get_header();
 			while ( have_posts() ) :
 				the_post();
 
-				get_template_part( 'template-parts/content/content', 'page' );
+				// Detect page and load appropriate content template
+				$post_slug = get_post_field( 'post_name' );
+				$post_title = get_the_title();
+
+				if ( $post_slug === 'subscription' || strpos( strtolower( $post_title ), 'abonnement' ) !== false ) {
+					get_template_part( 'template-parts/content/content', 'subscription' );
+				} elseif ( strpos( strtolower( $post_title ), 'shop' ) !== false || strpos( strtolower( $post_title ), 'boutique' ) !== false ) {
+					get_template_part( 'template-parts/content/content', 'shop' );
+				} else {
+					get_template_part( 'template-parts/content/content', 'page' );
+				}
 
 				// If comments are open, or we have at least one comment, load
 				// the comment template.
@@ -38,3 +48,4 @@ get_header();
 
 <?php
 get_footer();
+
