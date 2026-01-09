@@ -20,19 +20,34 @@
 	<?php _tw_post_thumbnail(); ?>
 
 	<div <?php _tw_content_class( 'entry-content' ); ?>>
+		<!-- Contenu principal de la page (vide pour shop) -->
+	</div><!-- .entry-content -->
 
-		<!-- Contenu principal de la page -->
-		<?php the_content(); ?>
+	<!-- Section produits - en dehors de entry-content pour pleine largeur -->
+	<section class="shop-products">
+			<h2 class="shop-title">Tous nos produits</h2>
 
-		<!-- Section produits -->
-		<section class="shop-products">
-			<h2><?php _e( 'Nos Produits', '_tw' ); ?></h2>
+			<!-- Filtres -->
+			<div class="shop-filters">
+				<div class="filter-item">
+					<button class="filter-btn">Sectaire <span>▼</span></button>
+				</div>
+				<div class="filter-item">
+					<button class="filter-btn">Type de produits <span>▼</span></button>
+				</div>
+				<div class="filter-item">
+					<button class="filter-btn">Prix <span>▼</span></button>
+				</div>
+				<div class="filter-item">
+					<button class="filter-btn">Quantité <span>▼</span></button>
+				</div>
+			</div>
 
 			<?php
 			// Afficher les produits (si WooCommerce est actif)
 			if ( class_exists( 'WooCommerce' ) ) {
-				// WooCommerce shortcode
-				echo do_shortcode( '[products limit="12" columns="3"]' );
+				// WooCommerce shortcode avec 4 colonnes
+				echo do_shortcode( '[products limit="12" columns="4"]' );
 			} else {
 				// Afficher un message si WooCommerce n'est pas activé
 				echo '<div class="shop-notice">';
@@ -41,16 +56,6 @@
 			}
 			?>
 		</section><!-- .shop-products -->
-
-		<?php
-		wp_link_pages(
-			array(
-				'before' => '<div>' . __( 'Pages:', '_tw' ),
-				'after'  => '</div>',
-			)
-		);
-		?>
-	</div><!-- .entry-content -->
 
 	<?php if ( get_edit_post_link() ) : ?>
 		<footer class="entry-footer">
@@ -77,16 +82,59 @@
 
 <style>
 .shop-products {
-	margin: 40px 0;
-	padding: 30px;
-	background-color: #f9f9f9;
-	border-radius: 8px;
+	margin: 0;
+	padding: 40px;
+	background-color: #f5f1ed;
+	border-radius: 0;
 }
 
-.shop-products h2 {
-	margin-bottom: 30px;
-	text-align: center;
-	color: #333;
+.shop-title {
+	font-size: 48px;
+	font-weight: 900;
+	text-transform: uppercase;
+	margin: 0 0 40px 0;
+	color: #000;
+	letter-spacing: 0.5px;
+}
+
+/* Filtres */
+.shop-filters {
+	display: flex;
+	gap: 20px;
+	margin-bottom: 50px;
+	flex-wrap: wrap;
+	align-items: center;
+}
+
+.filter-item {
+	flex: 1;
+	min-width: 150px;
+}
+
+.filter-btn {
+	width: 100%;
+	padding: 12px 20px;
+	background: white;
+	border: 2px solid #000;
+	border-radius: 30px;
+	font-size: 12px;
+	font-weight: 700;
+	text-transform: uppercase;
+	cursor: pointer;
+	letter-spacing: 0.5px;
+	transition: all 0.3s;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.filter-btn:hover {
+	background-color: #f0f0f0;
+}
+
+.filter-btn span {
+	font-size: 10px;
+	margin-left: 10px;
 }
 
 .shop-notice {
@@ -98,62 +146,179 @@
 	text-align: center;
 }
 
-/* Styles pour les produits WooCommerce */
-.products {
-	display: grid;
-	grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-	gap: 20px;
-	margin: 0;
+/* WooCommerce Styles */
+.shop-products .woocommerce {
+	background: transparent !important;
+	padding: 0 !important;
+	margin: 0 !important;
 }
 
-.product {
-	background: white;
-	border-radius: 8px;
-	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-	overflow: hidden;
-	transition: transform 0.3s, box-shadow 0.3s;
+/* Result count et sorting */
+.shop-products .woocommerce-result-count {
+	display: none;
 }
 
-.product:hover {
-	transform: translateY(-5px);
-	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+.shop-products .woocommerce-ordering {
+	display: none;
 }
 
-.product img {
-	width: 100%;
-	height: 250px;
-	object-fit: cover;
-	display: block;
+/* Grille de produits */
+.shop-products ul.products,
+.shop-products .products {
+	display: grid !important;
+	grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+	gap: 20px !important;
+	margin: 0 !important;
+	padding: 0 !important;
+	list-style: none !important;
+	width: 100% !important;
+	align-items: stretch !important;
 }
 
-.product-info {
-	padding: 15px;
+.shop-products li.product {
+	background: #fef4e8 !important;
+	border-radius: 12px !important;
+	overflow: hidden !important;
+	transition: transform 0.3s, box-shadow 0.3s !important;
+	display: flex !important;
+	flex-direction: column !important;
+	margin: 0 !important;
+	padding: 0 !important;
+	border: none !important;
+	box-shadow: none !important;
+	width: 100% !important;
+	height: 100% !important;
 }
 
-.product-info h3 {
-	margin: 0 0 10px 0;
-	font-size: 16px;
+.shop-products li.product:hover {
+	transform: translateY(-3px) !important;
+	box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1) !important;
 }
 
-.product-info .price {
-	color: #007bff;
-	font-weight: bold;
-	margin-bottom: 10px;
+/* Image du produit */
+.shop-products a.woocommerce-loop-product__link {
+	display: flex !important;
+	flex-direction: column !important;
+	height: 100% !important;
+	text-decoration: none !important;
+	color: inherit !important;
+	padding: 0 !important;
 }
 
-.product-info .button {
-	width: 100%;
-	padding: 10px;
-	background-color: #007bff;
-	color: white;
-	border: none;
+.shop-products a.woocommerce-loop-product__link img {
+	width: 100% !important;
+	height: 280px !important;
+	object-fit: cover !important;
+	display: block !important;
+	margin: 0 !important;
+	padding: 0 !important;
+	flex-shrink: 0 !important;
+}
+
+/* Titre du produit */
+.shop-products h2.woocommerce-loop-product__title {
+	font-size: 16px !important;
+	font-weight: 900 !important;
+	text-transform: uppercase !important;
+	margin: 0 !important;
+	color: #000 !important;
+	letter-spacing: 0.5px !important;
+	padding: 20px 20px 15px 20px !important;
+	line-height: 1.4 !important;
+	width: 100% !important;
+	box-sizing: border-box !important;
+	min-height: 50px !important;
+	display: flex !important;
+	align-items: center !important;
+}
+
+/* Prix */
+.shop-products .price {
+	font-size: 12px !important;
+	font-weight: 700 !important;
+	margin: 12px 20px 0 20px !important;
+	color: #c1392b !important;
+	display: block !important;
+	width: calc(100% - 40px) !important;
+	box-sizing: border-box !important;
+}
+
+/* Bouton Ajouter au panier */
+.shop-products a.add_to_cart_button.button {
+	width: calc(100% - 40px) !important;
+	padding: 10px 15px !important;
+	background-color: #fff3e0 !important;
+	color: #000 !important;
+	border: 2px solid #000 !important;
+	border-radius: 6px !important;
+	cursor: pointer !important;
+	font-weight: 700 !important;
+	font-size: 11px !important;
+	text-transform: uppercase !important;
+	letter-spacing: 0.3px !important;
+	transition: all 0.3s !important;
+	margin: 12px 20px 20px 20px !important;
+	margin-top: auto !important;
+	display: block !important;
+	text-align: center !important;
+	text-decoration: none !important;
+	box-sizing: border-box !important;
+}
+
+.shop-products a.add_to_cart_button.button:hover {
+	background-color: #000 !important;
+	color: white !important;
+}
+
+/* Pagination */
+.shop-products .woocommerce-pagination {
+	display: flex !important;
+	justify-content: center !important;
+	margin-top: 40px !important;
+	gap: 10px !important;
+}
+
+.shop-products .page-numbers {
+	padding: 8px 12px;
+	border: 1px solid #ccc;
 	border-radius: 4px;
-	cursor: pointer;
-	font-weight: 600;
-	transition: background-color 0.3s;
+	text-decoration: none;
+	color: #000;
 }
 
-.product-info .button:hover {
-	background-color: #0056b3;
+.shop-products .page-numbers.current {
+	background: #000;
+	color: white;
+	border-color: #000;
+}
+
+@media (max-width: 1200px) {
+	.shop-products ul.products {
+		grid-template-columns: repeat(3, 1fr) !important;
+	}
+}
+
+@media (max-width: 768px) {
+	.shop-title {
+		font-size: 32px;
+	}
+
+	.shop-filters {
+		flex-direction: column;
+	}
+
+	.filter-item {
+		width: 100%;
+		min-width: unset;
+	}
+
+	.shop-products ul.products {
+		grid-template-columns: repeat(2, 1fr) !important;
+		gap: 15px !important;
+	}
+
+	.shop-products {
+		padding: 20px;
+	}
 }
 </style>
