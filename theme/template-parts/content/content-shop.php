@@ -1,3 +1,9 @@
+<style>
+.shop-products ul.products::before {
+	display: none !important;
+	content: none !important;
+}
+</style>
 <?php
 /**
  * Template part for displaying shop page
@@ -41,7 +47,7 @@
 			// Afficher les produits (si WooCommerce est actif)
 			if ( class_exists( 'WooCommerce' ) ) {
 				// WooCommerce shortcode avec 4 colonnes
-				echo do_shortcode( '[products limit="12" columns="4"]' );
+				echo do_shortcode( '[products limit="8" columns="4" paginate="true"]' );
 			} else {
 				// Afficher un message si WooCommerce n'est pas activé
 				echo '<div class="shop-notice">';
@@ -50,6 +56,12 @@
 			}
 			?>
 		</section><!-- .shop-products -->
+
+
+	<?php
+	// Ajout de la section "makeyourown" avant le footer
+	get_template_part('template-parts/content-front/makeyourown-section');
+	?>
 
 	<?php if ( get_edit_post_link() ) : ?>
 		<footer class="entry-footer">
@@ -224,6 +236,7 @@
 	min-height: 50px !important;
 	display: flex !important;
 	align-items: center !important;
+	font-family: 'Segoe UI', 'Arial', 'Helvetica Neue', Helvetica, sans-serif !important;
 }
 
 /* Prix */
