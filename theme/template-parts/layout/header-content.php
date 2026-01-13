@@ -20,16 +20,16 @@
 
 		<!-- Zone droite -->
 		<div class="flex items-center gap-6">
-			<!-- Icône box -->
-			<button
-				class="focus:outline-none cursor-pointer"
-				aria-label="Box">
+			<!-- Icône panier WooCommerce -->
+			<a
+				href="<?php echo esc_url(wc_get_cart_url()); ?>"
+				class="focus:outline-none cursor-pointer inline-flex items-center"
+				aria-label="Panier">
 				<img
-					id="headerBoxIcon"
 					src="<?php echo esc_url(get_template_directory_uri() . '/assets/svg/icon-box.svg'); ?>"
-					alt="Box"
+					alt="Panier"
 					class="h-7 w-7 transition-colors duration-200" />
-			</button>
+			</a>
 
 			<!-- Bouton menu -->
 			<button
