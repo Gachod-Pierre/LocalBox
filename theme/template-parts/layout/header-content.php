@@ -7,7 +7,7 @@
  */
 ?>
 
-<header id="masthead" class="bg-[#f4f0ef] text-black relative">
+<header id="masthead" class="sticky top-0 z-40 backdrop-blur-3xl bg-[#F4F0EF]/70 text-black">
 	<div class="max-w-7xl mx-auto flex items-center justify-between px-4 py-4">
 		<!-- Logo -->
 		<a href="<?php echo esc_url(home_url('/')); ?>" class="inline-flex items-center">
