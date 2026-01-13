@@ -13,8 +13,8 @@
 	<section class="flex justify-center">
 
 		<div class="bg-[#C5B4E2] text-black rounded-xl px-6 py-10 md:px-12 md:py-14 shadow-xl
-                    max-w-4xl 
-                    mx-4 
+                    max-w-4xl
+                    mx-4
                     -mt-32">
 			<h2 class="text-center text-3xl md:text-4xl font-extrabold tracking-wide leading-tight">
 				AJOUTEZ NOUS À VOTRE<br class="md:hidden" /> BOITE DE RÉCEPTION
@@ -63,7 +63,7 @@
 		<!-- COL 2 -->
 		<div class="col-span-1 md:row-span-2">
 			<div class="flex flex-col gap-4 text-sm font-bold tracking-wide">
-				<a href="#">À PROPOS</a>
+				<a href="/a-propos/">À PROPOS</a>
 				<a href="#">NEWS</a>
 				<a href="#">CONTACTEZ-NOUS</a>
 				<a href="#">POLITIQUE DE CONFIDENTIALITÉ</a>
