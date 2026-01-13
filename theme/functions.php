@@ -223,56 +223,56 @@ add_filter('register_block_type_args', '_tw_modify_heading_levels', 10, 2);
  */
 function localbox_enqueue_assets()
 {
-    /* -------------------------
+	/* -------------------------
      *  CSS PRINCIPAL
      * ------------------------- */
-    wp_enqueue_style(
-        '_tw-style',
-        get_stylesheet_uri(),
-        array(),
-        _TW_VERSION
-    );
+	wp_enqueue_style(
+		'_tw-style',
+		get_stylesheet_uri(),
+		array(),
+		_TW_VERSION
+	);
 
 
-    /* -------------------------
+	/* -------------------------
      *  JS GÉNÉRÉS PAR ESBUILD
      * ------------------------- */
 
-    // Script principal
-    wp_enqueue_script(
-        '_tw-script',
-        get_template_directory_uri() . '/js/script.min.js',
-        array(),
-        _TW_VERSION,
-        true
-    );
-
-    // Script du menu
-    wp_enqueue_script(
-        '_tw-menu',
-        get_template_directory_uri() . '/js/menu.min.js',
-        array(),
-        _TW_VERSION,
-        true
-    );
-
-    // Script d'animation du Hero (généré par esbuild)
-    wp_enqueue_script(
-    'localbox-animations',
-    get_template_directory_uri() . '/js/hero-animations.min.js',
-    array('gsap', 'gsap-scrolltrigger'),
-    _TW_VERSION,
-    true
+	// Script principal
+	wp_enqueue_script(
+		'_tw-script',
+		get_template_directory_uri() . '/js/script.min.js',
+		array(),
+		_TW_VERSION,
+		true
 	);
 
-    // Script pour la section valeurs
-    wp_enqueue_script(
-        'localbox-values',
-        get_template_directory_uri() . '/js/values-scroll.min.js',
-        array(),
-        _TW_VERSION,
-        true
-    );
+	// Script du menu
+	wp_enqueue_script(
+		'_tw-menu',
+		get_template_directory_uri() . '/js/menu.min.js',
+		array(),
+		_TW_VERSION,
+		true
+	);
+
+	// Script d'animation du Hero (généré par esbuild)
+	wp_enqueue_script(
+		'localbox-animations',
+		get_template_directory_uri() . '/js/hero-animations.min.js',
+		array('gsap', 'gsap-scrolltrigger'),
+		_TW_VERSION,
+		true
+	);
+
+	// Script pour la section valeurs
+	wp_enqueue_script(
+		'localbox-values',
+		get_template_directory_uri() . '/js/values-scroll.min.js',
+		array(),
+		_TW_VERSION,
+		true
+	);
 
 	// Carousel des box (page d'accueil)
 	if (is_front_page()) {
@@ -298,11 +298,11 @@ function localbox_enqueue_assets()
 
 
 
-    /* -------------------------
+	/* -------------------------
      *  LIBRAIRIES EXTERNES
      * ------------------------- */
 
-    // GSAP depuis CDN
+	// GSAP depuis CDN
 	wp_enqueue_script(
 		'gsap',
 		'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js',
@@ -322,12 +322,12 @@ function localbox_enqueue_assets()
 
 
 
-    /* -------------------------
+	/* -------------------------
      *  SCRIPTS WORDPRESS
      * ------------------------- */
-    if (is_singular() && comments_open() && get_option('thread_comments')) {
-        wp_enqueue_script('comment-reply');
-    }
+	if (is_singular() && comments_open() && get_option('thread_comments')) {
+		wp_enqueue_script('comment-reply');
+	}
 }
 
 add_action('wp_enqueue_scripts', 'localbox_enqueue_assets');
@@ -350,3 +350,100 @@ require get_template_directory() . '/inc/template-functions.php';
  * Subscription handler functions.
  */
 require get_template_directory() . '/inc/subscription-handler.php';
+
+/**
+ * Ajouter un formulaire Add to Cart avec quantité personnalisée pour la boucle shop
+ */
+function localbox_custom_add_to_cart_loop()
+{
+	global $product;
+
+	if (! $product->is_purchasable()) {
+		return;
+	}
+
+	$product_id = $product->get_id();
+	$min_qty = apply_filters('woocommerce_quantity_input_min', $product->get_min_purchase_quantity(), $product);
+	$max_qty = apply_filters('woocommerce_quantity_input_max', $product->get_max_purchase_quantity(), $product);
+	$input_value = $product->get_min_purchase_quantity();
+?>
+	<div class="product-price-qty" style="display: flex; align-items: center; justify-content: space-between; gap: 10px; margin: 0 20px 20px; width: calc(100% - 40px); box-sizing: border-box;">
+		<form method="post" class="cart product-add-to-cart-form" onclick="event.stopPropagation();" style="display: flex; align-items: center; gap: 10px; margin: 0; box-sizing: border-box; flex: 1;">
+			<div class="quantity">
+				<button type="button" class="qty-minus" data-action="minus">−</button>
+				<input type="number" class="input-text qty text" name="quantity" value="<?php echo esc_attr($input_value); ?>" min="<?php echo esc_attr($min_qty); ?>" max="<?php echo esc_attr($max_qty); ?>" step="1" placeholder="1" inputmode="numeric" readonly />
+				<button type="button" class="qty-plus" data-action="plus">+</button>
+			</div>
+			<button type="submit" name="add-to-cart" value="<?php echo esc_attr($product_id); ?>" class="button wp-element-button" style="flex: 1; padding: 10px 15px; background-color: #fff3e0; color: #000; border: 2px solid #000; border-radius: 6px; cursor: pointer; font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: 0.3px; transition: all 0.3s;">
+				<?php echo esc_html($product->single_add_to_cart_text()); ?>
+			</button>
+		</form>
+	</div>
+	<script>
+		(function() {
+			const form = document.querySelector('.product-add-to-cart-form');
+			if (!form) return;
+
+			const qtyInput = form.querySelector('input[name="quantity"]');
+			const minusBtn = form.querySelector('.qty-minus');
+			const plusBtn = form.querySelector('.qty-plus');
+
+			if (!qtyInput || !minusBtn || !plusBtn) return;
+
+			const min = parseInt(qtyInput.getAttribute('min')) || 1;
+			const max = parseInt(qtyInput.getAttribute('max')) || Infinity;
+
+			// Détruire tous les event listeners de WooCommerce
+			const newInput = qtyInput.cloneNode(true);
+			qtyInput.parentNode.replaceChild(newInput, qtyInput);
+			const freshQtyInput = form.querySelector('input[name="quantity"]');
+
+			// Forcer les attributs
+			freshQtyInput.setAttribute('step', '1');
+			freshQtyInput.step = 1;
+
+			// Fonction pour mettre à jour la quantité
+			function updateQty(operation) {
+				let qty = parseInt(freshQtyInput.value) || min;
+				if (operation === 'minus' && qty > min) {
+					freshQtyInput.value = qty - 1;
+				} else if (operation === 'plus' && qty < max) {
+					freshQtyInput.value = qty + 1;
+				}
+				freshQtyInput.dispatchEvent(new Event('change', {
+					bubbles: true
+				}));
+			}
+
+			// Attacher les listeners sur les nouveaux éléments
+			const newMinusBtn = form.querySelector('.qty-minus');
+			const newPlusBtn = form.querySelector('.qty-plus');
+
+			newMinusBtn.addEventListener('click', function(e) {
+				e.preventDefault();
+				e.stopPropagation();
+				updateQty('minus');
+			});
+
+			newPlusBtn.addEventListener('click', function(e) {
+				e.preventDefault();
+				e.stopPropagation();
+				updateQty('plus');
+			});
+
+			// Empêcher les flèches du clavier de modifier la quantité par 5
+			freshQtyInput.addEventListener('keydown', function(e) {
+				if (e.key === 'ArrowUp') {
+					e.preventDefault();
+					updateQty('plus');
+				} else if (e.key === 'ArrowDown') {
+					e.preventDefault();
+					updateQty('minus');
+				}
+			});
+		})();
+	</script>
+<?php
+}
+remove_action('woocommerce_after_shop_loop_item', 'woocommerce_template_loop_add_to_cart', 10);
+add_action('woocommerce_after_shop_loop_item', 'localbox_custom_add_to_cart_loop', 10);

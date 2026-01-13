@@ -7,7 +7,7 @@
  */
 ?>
 
-<header id="masthead" class="bg-[#f4f0ef] text-black relative">
+<header id="masthead" class="sticky top-0 z-40 backdrop-blur-3xl bg-[#F4F0EF]/70 text-black">
 	<div class="max-w-7xl mx-auto flex items-center justify-between px-4 py-4">
 		<!-- Logo -->
 		<a href="<?php echo esc_url(home_url('/')); ?>" class="inline-flex items-center">
@@ -20,16 +20,16 @@
 
 		<!-- Zone droite -->
 		<div class="flex items-center gap-6">
-			<!-- Icône box -->
-			<button
-				class="focus:outline-none cursor-pointer"
-				aria-label="Box">
+			<!-- Icône panier WooCommerce -->
+			<a
+				href="<?php echo esc_url(wc_get_cart_url()); ?>"
+				class="focus:outline-none cursor-pointer inline-flex items-center"
+				aria-label="Panier">
 				<img
-					id="headerBoxIcon"
 					src="<?php echo esc_url(get_template_directory_uri() . '/assets/svg/icon-box.svg'); ?>"
-					alt="Box"
+					alt="Panier"
 					class="h-7 w-7 transition-colors duration-200" />
-			</button>
+			</a>
 
 			<!-- Bouton menu -->
 			<button

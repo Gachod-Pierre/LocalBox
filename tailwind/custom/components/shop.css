@@ -1,0 +1,349 @@
+/**
+ * WooCommerce Shop Styles
+ *
+ * Styles personnalisés pour la page shop
+ * Cible les éléments générés par WooCommerce
+ */
+
+@layer components {
+	/* WooCommerce Wrapper */
+	.shop-products .woocommerce {
+		background: transparent !important;
+		padding: 0 !important;
+		margin: 0 !important;
+	}
+
+	/* Result count et sorting - Masquage */
+	.shop-products .woocommerce-result-count {
+		display: none !important;
+	}
+
+	.shop-products .woocommerce-ordering {
+		display: none !important;
+	}
+
+	/* Grille de produits - Responsive 1 à 4 colonnes */
+	.shop-products ul.products,
+	.shop-products .products {
+		display: grid !important;
+		grid-template-columns: 1fr !important;
+		gap: 20px !important;
+		margin: 0 !important;
+		padding: 0 !important;
+		list-style: none !important;
+		width: 100% !important;
+		align-items: stretch !important;
+	}
+
+	.shop-products ul.products::before {
+		display: none !important;
+		content: none !important;
+	}
+
+	/* Carte produit */
+	.shop-products li.product {
+		background: #fcdba3 !important;
+		border-radius: 12px !important;
+		overflow: hidden !important;
+		transition:
+			transform 0.3s,
+			box-shadow 0.3s !important;
+		display: flex !important;
+		flex-direction: column !important;
+		margin: 0 !important;
+		padding: 0 !important;
+		border: none !important;
+		box-shadow: none !important;
+		width: 100% !important;
+		height: 100% !important;
+	}
+
+	.shop-products li.product:hover {
+		transform: translateY(-3px) !important;
+		box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1) !important;
+	}
+
+	/* Image du produit */
+	.shop-products a.woocommerce-loop-product__link {
+		display: flex !important;
+		flex-direction: column !important;
+		height: 100% !important;
+		text-decoration: none !important;
+		color: inherit !important;
+		padding: 0 !important;
+	}
+
+	.shop-products a.woocommerce-loop-product__link img {
+		width: 100% !important;
+		height: 280px !important;
+		object-fit: cover !important;
+		display: block !important;
+		margin: 0 !important;
+		padding: 0 !important;
+		flex-shrink: 0 !important;
+	}
+
+	/* Titre du produit */
+	.shop-products h2.woocommerce-loop-product__title {
+		font-size: 18px !important;
+		font-weight: 900 !important;
+		text-transform: uppercase !important;
+		margin: 0 !important;
+		color: #000 !important;
+		letter-spacing: 0.5px !important;
+		padding: 20px 20px 15px 20px !important;
+		line-height: 1.4 !important;
+		width: 100% !important;
+		box-sizing: border-box !important;
+		min-height: 50px !important;
+		display: flex !important;
+		align-items: center !important;
+		font-family:
+			"Segoe UI", "Arial", "Helvetica Neue", Helvetica, sans-serif !important;
+	}
+
+	/* Prix */
+	.shop-products .price {
+		font-size: 16px !important;
+		font-weight: 700 !important;
+		margin: 0 !important;
+		padding: 5px 20px !important;
+		color: #c1392b !important;
+		display: flex !important;
+		align-items: center !important;
+		flex: 1;
+	}
+
+	/* Wrapper prix + quantité */
+	.product-price-qty {
+		display: flex !important;
+		justify-content: space-between !important;
+		align-items: center !important;
+		gap: 10px !important;
+		margin: 12px 20px !important;
+		width: calc(100% - 40px) !important;
+		box-sizing: border-box !important;
+		position: relative;
+		z-index: 10;
+	}
+
+	/* Wrapper quantité dans le wrapper prix */
+	.product-add-to-cart-form {
+		display: flex !important;
+		align-items: center !important;
+		justify-content: space-between !important;
+		gap: 10px !important;
+		margin: 0 !important;
+		box-sizing: border-box !important;
+		position: relative;
+		z-index: 10;
+	}
+
+	/* Wrapper quantité dans le wrapper prix */
+	.product-price-qty .quantity {
+		display: flex !important;
+		align-items: center !important;
+		gap: 8px !important;
+		border: none !important;
+		border-radius: 0 !important;
+		overflow: visible !important;
+		height: auto;
+	}
+
+	.product-price-qty .quantity input {
+		width: 30px !important;
+		height: 28px !important;
+		border: 1px solid #000 !important;
+		padding: 0 !important;
+		text-align: center !important;
+		font-size: 14px !important;
+		font-weight: bold !important;
+		background: transparent !important;
+		-moz-appearance: textfield !important;
+		appearance: textfield !important;
+		border-radius: 4px !important;
+	}
+
+	/* Masquer les spinbuttons (flèches) pour le wrapper prix */
+	.product-price-qty .quantity input::-webkit-outer-spin-button,
+	.product-price-qty .quantity input::-webkit-inner-spin-button {
+		-webkit-appearance: none !important;
+		appearance: none !important;
+		margin: 0 !important;
+		display: none !important;
+		visibility: hidden !important;
+	}
+
+	.product-price-qty .quantity input[type="number"] {
+		-moz-appearance: textfield !important;
+		appearance: textfield !important;
+	}
+
+	/* Boutons + et - du wrapper prix */
+	.product-price-qty .quantity button {
+		width: 28px !important;
+		height: 28px !important;
+		border: none !important;
+		border-radius: 50% !important;
+		background: #ffffff !important;
+		cursor: pointer !important;
+		font-size: 14px !important;
+		padding: 0 !important;
+		display: flex !important;
+		align-items: center !important;
+		justify-content: center !important;
+		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+		transition: all 0.2s !important;
+		color: #000 !important;
+	}
+
+	.product-price-qty .quantity button:hover {
+		background: #f5f5f5 !important;
+		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15) !important;
+	}
+
+	/* Wrapper quantité dans le formulaire */
+	.product-add-to-cart-form .quantity {
+		display: flex !important;
+		align-items: center !important;
+		gap: 8px !important;
+		border: none !important;
+		border-radius: 0 !important;
+		overflow: visible !important;
+		height: auto;
+	}
+
+	.product-add-to-cart-form .quantity input {
+		width: 30px !important;
+		height: 28px !important;
+		border: none !important;
+		padding: 0 !important;
+		text-align: center !important;
+		font-size: 14px !important;
+		font-weight: bold !important;
+		background: transparent !important;
+		-moz-appearance: textfield !important;
+		appearance: textfield !important;
+	}
+
+	/* Masquer complètement les spinbuttons (flèches) */
+	.product-add-to-cart-form .quantity input::-webkit-outer-spin-button,
+	.product-add-to-cart-form .quantity input::-webkit-inner-spin-button {
+		-webkit-appearance: none !important;
+		appearance: none !important;
+		margin: 0 !important;
+		display: none !important;
+		visibility: hidden !important;
+	}
+
+	.product-add-to-cart-form .quantity input[type="number"] {
+		-moz-appearance: textfield !important;
+		appearance: textfield !important;
+	}
+
+	/* Boutons + et - */
+	.product-add-to-cart-form .quantity .qty_button,
+	.product-add-to-cart-form .quantity button {
+		width: 28px !important;
+		height: 28px !important;
+		border: none !important;
+		border-radius: 50% !important;
+		background: #ffffff !important;
+		cursor: pointer !important;
+		font-size: 14px !important;
+		padding: 0 !important;
+		display: flex !important;
+		align-items: center !important;
+		justify-content: center !important;
+		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+		transition: all 0.2s !important;
+		color: #000 !important;
+	}
+
+	.product-add-to-cart-form .quantity .qty_button:hover,
+	.product-add-to-cart-form .quantity button:hover {
+		background: #f5f5f5 !important;
+		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15) !important;
+	}
+
+	/* Bouton Add to Cart dans le formulaire */
+	.product-add-to-cart-form .button {
+		flex: 1;
+		padding: 10px 15px !important;
+		margin: 0 !important;
+		background-color: #fff3e0 !important;
+		color: #000 !important;
+		border: 2px solid #000 !important;
+		border-radius: 6px !important;
+		cursor: pointer !important;
+		font-weight: 700 !important;
+		font-size: 11px !important;
+		text-transform: uppercase !important;
+		letter-spacing: 0.3px !important;
+		transition: all 0.3s !important;
+		text-align: center !important;
+		text-decoration: none !important;
+		box-sizing: border-box !important;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.product-add-to-cart-form .button:hover {
+		background-color: #000 !important;
+		color: white !important;
+	}
+
+	/* Pagination */
+	.shop-products .woocommerce-pagination {
+		display: flex !important;
+		justify-content: center !important;
+		margin-top: 40px !important;
+		gap: 10px !important;
+	}
+
+	.shop-products .page-numbers {
+		padding: 8px 12px;
+		border: 1px solid #ccc;
+		border-radius: 4px;
+		text-decoration: none;
+		color: #000;
+	}
+
+	.shop-products .page-numbers.current {
+		background: #000;
+		color: white;
+		border-color: #000;
+	}
+
+	/* Media queries - Responsive mobile → tablet → laptop → desktop → très grand écran */
+	@media (min-width: 640px) {
+		.shop-products ul.products,
+		.shop-products .products {
+			grid-template-columns: repeat(2, 1fr) !important;
+		}
+	}
+
+	@media (min-width: 1024px) {
+		.shop-products ul.products,
+		.shop-products .products {
+			grid-template-columns: repeat(3, 1fr) !important;
+		}
+	}
+
+	@media (min-width: 1280px) {
+		.shop-products ul.products,
+		.shop-products .products {
+			grid-template-columns: repeat(4, 1fr) !important;
+		}
+	}
+
+	@media (min-width: 1536px) {
+		.shop-products ul.products,
+		.shop-products .products {
+			grid-template-columns: repeat(5, 1fr) !important;
+		}
+	}
+
+
+}
