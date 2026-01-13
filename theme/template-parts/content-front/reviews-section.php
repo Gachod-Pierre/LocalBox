@@ -89,7 +89,15 @@
 			</div>
 		</div>
 	</div>
+
 </section>
+
+<!-- Vague orange en bas -->
+<div class="w-full overflow-hidden" style="line-height:0;">
+	<svg width="1920" height="418" viewBox="0 0 1920 418" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto -mt-40 ">
+		<path d="M534.409 402.817C66.9658 466.559 -38.0924 303.957 -32.191 214.688L693.764 0H1694.17C1788.6 41.3145 1981.45 152.273 1997.38 265.593C2017.3 407.243 1687.53 460.362 1466.2 367.404C1244.87 274.446 1118.71 323.139 534.409 402.817Z" fill="#FF4901"/>
+	</svg>
+</div>
 
 <style>
 .reviews-section {
