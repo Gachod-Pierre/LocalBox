@@ -274,6 +274,17 @@ function localbox_enqueue_assets()
         true
     );
 
+	// Carousel des box (page d'accueil)
+	if (is_front_page()) {
+		wp_enqueue_script(
+			'localbox-monthlybox-carousel',
+			get_template_directory_uri() . '/js/monthlybox-carousel.min.js',
+			array(),
+			_TW_VERSION,
+			true
+		);
+	}
+
 	// Animations About page (GSAP)
 	if (is_page('a-propos')) {
 		wp_enqueue_script(
