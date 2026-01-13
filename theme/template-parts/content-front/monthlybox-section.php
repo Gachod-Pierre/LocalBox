@@ -11,7 +11,7 @@
     </svg>
 </div>
 
-<section class="w-full bg-[#C92358] py-16 relative overflow-hidden">
+<section class="w-full bg-[#C92358] py-16 relative overflow-hidden p-10">
 	<!-- Cercles concentriques en arrière-plan -->
 	<div class="absolute bottom-0 right-0 flex items-center justify-center pointer-events-none" style="width: 50%; height: 80%; transform: translateY(10%);">
 		<div class="absolute rounded-full border-2 border-white/20" style="width: 400px; height: 400px;"></div>
@@ -61,4 +61,18 @@
 
 		</div>
 	</div>
+
 </section>
+
+<!-- Vague décorative en bas -->
+<div class="w-full overflow-hidden pointer-events-none z-10" style="background-color:  #C92358">
+	<svg class="w-full h-auto" viewBox="0 0 1440 140" xmlns="http://www.w3.org/2000/svg">
+		<path d="
+			M0,40
+			C300,-10 600,120 900,40
+			C1200,-20 1440,40 1440,40
+			L1440,140 L0,140 Z"
+			fill="#F7F3F3">
+		</path>
+	</svg>
+</div>

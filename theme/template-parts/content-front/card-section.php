@@ -64,7 +64,7 @@
         </svg>
     </div>
 
-        <!-- Interaction carte de France: mise à jour du titre et des liens -->
+        <!-- Interaction carte de France: mise à jour du titre, description et liens -->
         <script>
             document.addEventListener('DOMContentLoaded', function () {
                 const section = document.getElementById('carte-france');
@@ -83,78 +83,78 @@
                     alt: boxImg ? boxImg.getAttribute('alt') : ''
                 };
 
-                                const regionMap = {
-                                        'corse': {
-                                            name: 'Corse',
-                                            url: 'http://localbox.local/product/box-corse/',
-                                            description: 'Île de caractère, la Corse offre des saveurs authentiques entre mer turquoise et montagnes sauvages.'
-                                        },
-                                        'hauts-de-france': {
-                                            name: 'Hauts-de-France',
-                                            url: 'http://localbox.local/product/box-hauts-de-france/',
-                                            description: 'Terre de convivialité, entre estaminets, produits gourmands et patrimoine industriel réinventé.'
-                                        },
-                                        'normandie': {
-                                            name: 'Normandie',
-                                            url: 'http://localbox.local/product/box-normandie/',
-                                            description: 'Falaises, vergers et savoir-faire laitier : une région généreuse et authentique.'
-                                        },
-                                        'nouvelle-aquitaine': {
-                                            name: 'Nouvelle-Aquitaine',
-                                            url: 'http://localbox.local/product/box-nouvelle-aquitaine/',
-                                            description: 'Entre océan et vignobles, des produits de terroir raffinés et une douceur de vivre.'
-                                        },
-                                        'pays-de-la-loire': {
-                                            name: 'Pays de la Loire',
-                                            url: 'http://localbox.local/product/box-pays-de-la-loire/',
-                                            description: 'Châteaux, littoral et artisans passionnés : une sélection élégante et gourmande.'
-                                        },
-                                        'occitanie': {
-                                            name: 'Occitanie',
-                                            url: 'http://localbox.local/product/box-occitanie',
-                                            description: 'Entre mer et montagne, un art de vivre solaire mêlant patrimoine et gastronomie du Sud.'
-                                        },
-                                        // Remarque: le SVG utilise "provence-alpes-cotes-azur"
-                                        'provence-alpes-cotes-azur': {
-                                            name: 'Provence-Alpes-Côte d’Azur',
-                                            url: 'http://localbox.local/product/box-provence-alpes-cote-dazur/',
-                                            description: 'Parfums de garrigue, huile d’olive et douceurs ensoleillées : l’esprit Méditerranée.'
-                                        },
-                                        'auvergne-rhone-alpes': {
-                                            name: 'Auvergne-Rhône-Alpes',
-                                            url: 'http://localbox.local/product/box-auvergne-rhone-alpes/',
-                                            description: 'Massifs et lacs, fromages et charcuteries : une région de caractère et de traditions.'
-                                        },
-                                        'bourgogne-franche-comte': {
-                                            name: 'Bourgogne-Franche-Comté',
-                                            url: 'http://localbox.local/product/box-bourgogne-franche-comte/',
-                                            description: 'Vins, moutardes et savoir-faire ancestral : une élégance gourmande au naturel.'
-                                        },
-                                        'bretagne': {
-                                            name: 'Bretagne',
-                                            url: 'http://localbox.local/product/box-bretagne/',
-                                            description: 'Vents salés, crêpes et caramel au beurre : le goût de la mer et du terroir.'
-                                        },
-                                        'centre-val-de-loire': {
-                                            name: 'Centre-Val de Loire',
-                                            url: 'http://localbox.local/product/box-centre-val-de-loire/',
-                                            description: 'Châteaux, rivières et gourmandises délicates : une balade poétique au cœur de la France.'
-                                        },
-                                        // Remarque: le SVG utilise "grandest"
-                                        'grandest': {
-                                            name: 'Grand Est',
-                                            url: 'http://localbox.local/product/box-grand-est/',
-                                            description: 'Cités historiques, vignobles et spécialités généreuses : un mélange d’arts et de saveurs.'
-                                        },
-                                        // Aucune URL fournie pour Ile-de-France — on garde un lien neutre
-                                        'ile-de-france': {
-                                            name: 'Île-de-France',
-                                            url: '#',
-                                            description: 'Capitale créative et marchés gourmands : un carrefour de cultures et de goûts.'
-                                        }
-                                };
+                const regionMap = {
+                    'corse': {
+                        name: 'Corse',
+                        url: 'http://localbox.local/product/box-corse/',
+                        description: 'Île de caractère, la Corse offre des saveurs authentiques entre mer turquoise et montagnes sauvages.'
+                    },
+                    'hauts-de-france': {
+                        name: 'Hauts-de-France',
+                        url: 'http://localbox.local/product/box-hauts-de-france/',
+                        description: 'Terre de convivialité, entre estaminets, produits gourmands et patrimoine industriel réinventé.'
+                    },
+                    'normandie': {
+                        name: 'Normandie',
+                        url: 'http://localbox.local/product/box-normandie/',
+                        description: 'Falaises, vergers et savoir-faire laitier : une région généreuse et authentique.'
+                    },
+                    'nouvelle-aquitaine': {
+                        name: 'Nouvelle-Aquitaine',
+                        url: 'http://localbox.local/product/box-nouvelle-aquitaine/',
+                        description: 'Entre océan et vignobles, des produits de terroir raffinés et une douceur de vivre.'
+                    },
+                    'pays-de-la-loire': {
+                        name: 'Pays de la Loire',
+                        url: 'http://localbox.local/product/box-pays-de-la-loire/',
+                        description: 'Châteaux, littoral et artisans passionnés : une sélection élégante et gourmande.'
+                    },
+                    'occitanie': {
+                        name: 'Occitanie',
+                        url: 'http://localbox.local/product/box-occitanie',
+                        description: 'Entre mer et montagne, un art de vivre solaire mêlant patrimoine et gastronomie du Sud.'
+                    },
+                    // Le SVG utilise "provence-alpes-cotes-azur"
+                    'provence-alpes-cotes-azur': {
+                        name: 'Provence-Alpes-Côte d’Azur',
+                        url: 'http://localbox.local/product/box-provence-alpes-cote-dazur/',
+                        description: 'Parfums de garrigue, huile d’olive et douceurs ensoleillées : l’esprit Méditerranée.'
+                    },
+                    'auvergne-rhone-alpes': {
+                        name: 'Auvergne-Rhône-Alpes',
+                        url: 'http://localbox.local/product/box-auvergne-rhone-alpes/',
+                        description: 'Massifs et lacs, fromages et charcuteries : une région de caractère et de traditions.'
+                    },
+                    'bourgogne-franche-comte': {
+                        name: 'Bourgogne-Franche-Comté',
+                        url: 'http://localbox.local/product/box-bourgogne-franche-comte/',
+                        description: 'Vins, moutardes et savoir-faire ancestral : une élégance gourmande au naturel.'
+                    },
+                    'bretagne': {
+                        name: 'Bretagne',
+                        url: 'http://localbox.local/product/box-bretagne/',
+                        description: 'Vents salés, crêpes et caramel au beurre : le goût de la mer et du terroir.'
+                    },
+                    'centre-val-de-loire': {
+                        name: 'Centre-Val de Loire',
+                        url: 'http://localbox.local/product/box-centre-val-de-loire/',
+                        description: 'Châteaux, rivières et gourmandises délicates : une balade poétique au cœur de la France.'
+                    },
+                    // Le SVG utilise "grandest"
+                    'grandest': {
+                        name: 'Grand Est',
+                        url: 'http://localbox.local/product/box-grand-est/',
+                        description: 'Cités historiques, vignobles et spécialités généreuses : un mélange d’arts et de saveurs.'
+                    },
+                    // Pas d’URL fournie pour IDF
+                    'ile-de-france': {
+                        name: 'Île-de-France',
+                        url: '#',
+                        description: 'Capitale créative et marchés gourmands : un carrefour de cultures et de goûts.'
+                    }
+                };
 
-                // Rendre chaque région cliquable avec le bon lien
+                // Rendre chaque région cliquable et mettre à jour à la volée
                 svgGroup.querySelectorAll('.region').forEach(function (path) {
                     const classes = Array.from(path.classList);
                     const slug = classes.find(c => c !== 'region') || '';
