@@ -278,7 +278,7 @@ function updateForm() {
 	// Mettre à jour la barre de progression
 	const progress = (currentStep / totalSteps) * 100;
 	gsap.to('#progress-bar', { width: progress + '%', duration: 0.4 });
-	
+
 	document.getElementById('current-step').textContent = currentStep;
 	document.getElementById('step-title').textContent = steps[currentStep - 1];
 
@@ -327,7 +327,7 @@ function validateStep(step) {
 function saveFormData() {
 	const form = document.getElementById('multi-step-form');
 	const formData = new FormData(form);
-	
+
 	for (let [key, value] of formData.entries()) {
 		sessionStorage.setItem(key, value);
 	}
