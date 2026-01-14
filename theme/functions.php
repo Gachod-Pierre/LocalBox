@@ -233,15 +233,6 @@ function localbox_enqueue_assets()
 		_TW_VERSION
 	);
 
-	// MyAccount styles (connexion/inscription)
-	wp_enqueue_style(
-		'localbox-myaccount',
-		get_template_directory_uri() . '/../../tailwind/custom/components/myaccount.css',
-		array(),
-		_TW_VERSION
-	);
-
-
 	/* -------------------------
      *  JS GÉNÉRÉS PAR ESBUILD
      * ------------------------- */
