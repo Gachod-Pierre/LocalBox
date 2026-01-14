@@ -167,7 +167,9 @@
 		border: none !important;
 		width: 100% !important;
 		height: 100% !important;
-		transition: transform 0.3s, box-shadow 0.3s !important;
+		transition:
+			transform 0.3s,
+			box-shadow 0.3s !important;
 	}
 
 	.single-product .related li.product:hover {
