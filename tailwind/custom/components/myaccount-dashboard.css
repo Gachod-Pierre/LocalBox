@@ -1,0 +1,111 @@
+/**
+ * WooCommerce My Account Dashboard Styles
+ *
+ * Styles pour le contenu principal de la dashboard
+ */
+
+@layer components {
+	/* Dashboard container */
+	.woocommerce-MyAccount-content {
+		margin-top: 40px;
+	}
+
+	/* Welcome message */
+	.woocommerce-MyAccount-content > p:first-child {
+		font-size: 16px;
+		color: #000;
+		margin-bottom: 30px;
+		line-height: 1.6;
+	}
+
+	.woocommerce-MyAccount-content > p:first-child strong {
+		font-weight: 900;
+		color: #000;
+	}
+
+	.woocommerce-MyAccount-content > p:first-child a {
+		color: #e91e63;
+		text-decoration: none;
+		font-weight: 700;
+		transition: color 0.3s;
+	}
+
+	.woocommerce-MyAccount-content > p:first-child a:hover {
+		color: #c2185b;
+		text-decoration: underline;
+	}
+
+	/* Description paragraph */
+	.woocommerce-MyAccount-content > p:nth-of-type(2) {
+		font-size: 14px;
+		color: #666;
+		margin-bottom: 30px;
+		line-height: 1.8;
+		padding: 20px;
+		background-color: #f5f5f5;
+		border-radius: 8px;
+		border-left: 4px solid #e91e63;
+	}
+
+	.woocommerce-MyAccount-content > p:nth-of-type(2) a {
+		color: #e91e63;
+		text-decoration: none;
+		font-weight: 700;
+		transition: color 0.3s;
+	}
+
+	.woocommerce-MyAccount-content > p:nth-of-type(2) a:hover {
+		color: #c2185b;
+		text-decoration: underline;
+	}
+
+	/* Edit button */
+	.woocommerce-MyAccount-content .edit {
+		display: inline-block !important;
+		padding: 12px 32px !important;
+		background-color: #000 !important;
+		color: white !important;
+		text-decoration: none !important;
+		border: 2px solid #000 !important;
+		border-radius: 25px !important;
+		font-size: 13px !important;
+		font-weight: 700 !important;
+		text-transform: uppercase !important;
+		letter-spacing: 0.5px !important;
+		transition: all 0.3s !important;
+		margin-top: 20px !important;
+	}
+
+	.woocommerce-MyAccount-content .edit:hover {
+		background-color: #fff !important;
+		border: 2px solid #000 !important;
+		color: #000 !important;
+	}
+
+	/* Dashboard sections (recent orders, etc.) */
+	.woocommerce-MyAccount-content .woocommerce-Orders-table,
+	.woocommerce-MyAccount-content .woocommerce-downloads {
+		margin-top: 40px;
+	}
+
+	/* Specific padding for post-46 */
+	.post-46 {
+		padding-bottom: 10rem !important;
+	}
+
+	/* Mobile responsive */
+	@media (max-width: 640px) {
+		.woocommerce-MyAccount-content {
+			margin-top: 25px;
+		}
+
+		.woocommerce-MyAccount-content > p:first-child {
+			font-size: 14px;
+		}
+
+		.woocommerce-MyAccount-content > p:nth-of-type(2) {
+			font-size: 13px;
+			padding: 15px;
+		}
+	}
+}

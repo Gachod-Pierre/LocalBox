@@ -1,0 +1,157 @@
+/**
+ * WooCommerce My Account Forms Styles
+ *
+ * Styles pour les formulaires (Edit Account, Edit Address, etc.)
+ * Cohérent avec le style des formulaires de login
+ */
+
+@layer components {
+	/* Form wrapper */
+	.woocommerce-EditAccountForm,
+	.woocommerce-address-fields {
+		background-color: #fcdba3 !important;
+		padding: 40px !important;
+		border-radius: 12px !important;
+		border: 1px solid #e91e63 !important;
+		margin-top: 30px;
+		margin-bottom: 30px;
+	}
+
+	/* Section titles */
+	.woocommerce-EditAccountForm h3,
+	.woocommerce-address-fields h3 {
+		font-size: 18px !important;
+		font-weight: 900 !important;
+		text-transform: uppercase !important;
+		color: #000 !important;
+		margin-bottom: 25px !important;
+		letter-spacing: 0.5px !important;
+	}
+
+	/* Form rows - KEEP DEFAULT DISPLAY */
+	.woocommerce-EditAccountForm p,
+	.woocommerce-address-fields p {
+		margin-bottom: 20px !important;
+	}
+
+	/* Labels */
+	.woocommerce-EditAccountForm label,
+	.woocommerce-address-fields label {
+		font-size: 13px !important;
+		font-weight: 600 !important;
+		color: #333 !important;
+		margin-bottom: 8px !important;
+		display: block !important;
+	}
+
+	/* Form inputs */
+	.woocommerce-EditAccountForm input[type="text"],
+	.woocommerce-EditAccountForm input[type="email"],
+	.woocommerce-EditAccountForm input[type="password"],
+	.woocommerce-address-fields input[type="text"],
+	.woocommerce-address-fields input[type="email"],
+	.woocommerce-address-fields select {
+		padding: 12px 16px !important;
+		border: 1px solid #ddd !important;
+		border-radius: 6px !important;
+		font-size: 14px !important;
+		background-color: #fff !important;
+		width: 100% !important;
+		box-sizing: border-box !important;
+	}
+
+	.woocommerce-EditAccountForm input:focus,
+	.woocommerce-address-fields input:focus,
+	.woocommerce-address-fields select:focus {
+		outline: none !important;
+		border-color: #e91e63 !important;
+	}
+
+	/* Submit buttons */
+	.woocommerce-EditAccountForm button:not(.show-password-input),
+	.woocommerce-address-fields button:not(.show-password-input) {
+		width: 100% !important;
+		padding: 12px 32px !important;
+		background-color: #000 !important;
+		color: white !important;
+		border: 2px solid #000 !important;
+		border-radius: 25px !important;
+		font-size: 13px !important;
+		font-weight: 700 !important;
+		text-transform: uppercase !important;
+		cursor: pointer !important;
+		transition: all 0.3s !important;
+		margin-top: 20px !important;
+	}
+
+	.woocommerce-EditAccountForm button:not(.show-password-input):hover,
+	.woocommerce-address-fields button:not(.show-password-input):hover {
+		background-color: #fff !important;
+		border: 2px solid #000 !important;
+		color: #000 !important;
+	}
+
+	/* Show password button */
+	.woocommerce-EditAccountForm .show-password-input,
+	.woocommerce-address-fields .show-password-input {
+		width: auto !important;
+		padding: 0 !important;
+		background-color: transparent !important;
+		color: #000 !important;
+		border: none !important;
+		cursor: pointer !important;
+		margin-top: 0 !important;
+	}
+
+	/* Edit address link */
+	.woocommerce-address-fields a.edit {
+		padding: 12px 32px !important;
+		background-color: #000 !important;
+		color: white !important;
+		border: 2px solid #000 !important;
+		border-radius: 25px !important;
+		font-weight: 700 !important;
+		font-size: 13px !important;
+		display: inline-block !important;
+		text-decoration: none !important;
+		cursor: pointer !important;
+		transition: all 0.3s !important;
+		margin-top: 15px !important;
+	}
+
+	.woocommerce-address-fields a.edit:hover {
+		background-color: #fff !important;
+		border: 2px solid #000 !important;
+		color: #000 !important;
+	}
+
+	/* Add address buttons */
+	.woocommerce-MyAccount-content .woocommerce-Button {
+		padding: 12px 32px !important;
+		background-color: #000 !important;
+		color: white !important;
+		border: 2px solid #000 !important;
+		border-radius: 25px !important;
+		font-weight: 700 !important;
+		font-size: 13px !important;
+		display: inline-block !important;
+		text-decoration: none !important;
+		cursor: pointer !important;
+		transition: all 0.3s !important;
+		margin-top: 20px !important;
+	}
+
+	.woocommerce-MyAccount-content .woocommerce-Button:hover {
+		background-color: #fff !important;
+		border: 2px solid #000 !important;
+		color: #000 !important;
+	}
+
+	/* Mobile responsive */
+	@media (max-width: 640px) {
+		.woocommerce-EditAccountForm,
+		.woocommerce-address-fields {
+			padding: 25px !important;
+		}
+	}
+}

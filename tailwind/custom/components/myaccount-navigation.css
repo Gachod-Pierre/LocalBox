@@ -1,0 +1,112 @@
+/**
+ * WooCommerce My Account Navigation Styles
+ *
+ * Styles pour le menu de navigation de la dashboard
+ */
+
+@layer components {
+	/* Navigation wrapper */
+	.woocommerce-MyAccount-navigation {
+		margin-bottom: 40px;
+		padding-bottom: 40px;
+		border-bottom: 2px solid #e91e63;
+	}
+
+	/* Navigation list */
+	.woocommerce-MyAccount-navigation ul {
+		list-style: none;
+		display: flex;
+		flex-wrap: wrap;
+		gap: 40px;
+	}
+
+	/* Navigation items */
+	.woocommerce-MyAccount-navigation li {
+		list-style: none !important;
+	}
+
+	/* Navigation links */
+	.woocommerce-MyAccount-navigation a {
+		color: #e91e63 !important;
+		text-decoration: none !important;
+		font-size: 14px;
+		font-weight: 600;
+		text-transform: uppercase;
+		letter-spacing: 0.5px;
+		transition: color 0.3s;
+		position: relative;
+		display: inline-block;
+	}
+
+	/* Padding pour les liens normaux seulement */
+	.woocommerce-MyAccount-navigation
+		li:not(.woocommerce-MyAccount-navigation-link--customer-logout)
+		a {
+		padding-bottom: 0;
+	}
+
+	.woocommerce-MyAccount-navigation a:hover {
+		color: #000;
+	}
+
+	/* Active link */
+	.woocommerce-MyAccount-navigation li.is-active a {
+		color: #e91e63;
+		font-weight: 700;
+	}
+
+	.woocommerce-MyAccount-navigation li.is-active a::after {
+		content: "";
+		position: absolute;
+		bottom: -12px;
+		left: 0;
+		right: 0;
+		height: 2px;
+		background-color: #e91e63;
+	}
+
+	/* Log out button - distinct styling */
+	.woocommerce-MyAccount-navigation
+		li.woocommerce-MyAccount-navigation-link--customer-logout
+		a {
+		padding: 12px 32px !important;
+		background-color: #000;
+		color: white !important;
+		border: 2px solid #000 !important;
+		border-radius: 25px;
+		font-weight: 700;
+		font-size: 13px;
+		transition: all 0.3s;
+	}
+
+	.woocommerce-MyAccount-navigation
+		li.woocommerce-MyAccount-navigation-link--customer-logout
+		a:hover {
+		background-color: #fff !important;
+		border: 2px solid #000 !important;
+		color: #000 !important;
+	}
+
+	.woocommerce-MyAccount-navigation
+		li.is-active.woocommerce-MyAccount-navigation-link--customer-logout
+		a::after {
+		display: none;
+	}
+
+	/* Mobile responsive */
+	@media (max-width: 640px) {
+		.woocommerce-MyAccount-navigation {
+			margin-bottom: 30px;
+			padding-bottom: 30px;
+		}
+
+		.woocommerce-MyAccount-navigation ul {
+			flex-direction: column;
+			gap: 15px;
+		}
+
+		.woocommerce-MyAccount-navigation a {
+			font-size: 13px;
+		}
+	}
+}
