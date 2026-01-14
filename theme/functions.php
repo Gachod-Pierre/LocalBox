@@ -352,6 +352,180 @@ require get_template_directory() . '/inc/template-functions.php';
 require get_template_directory() . '/inc/subscription-handler.php';
 
 /**
+ * Join product meta lookup table for price sorting.
+ */
+function localbox_add_price_lookup_join($join, $query)
+{
+    if (is_admin() || !$query->is_main_query()) {
+        return $join;
+    }
+
+    if (!(function_exists('is_shop') && (is_shop() || is_post_type_archive('product') || is_tax(array('product_cat', 'product_tag'))))) {
+        return $join;
+    }
+
+    $orderby_param = isset($_GET['orderby']) ? sanitize_text_field(wp_unslash($_GET['orderby'])) : '';
+    if (!$orderby_param || ($orderby_param !== 'price-asc' && $orderby_param !== 'price-desc')) {
+        return $join;
+    }
+
+    global $wpdb;
+    $lookup = isset($wpdb->wc_product_meta_lookup) ? $wpdb->wc_product_meta_lookup : $wpdb->prefix . 'wc_product_meta_lookup';
+
+    // Add join if not already present
+    if (strpos($join, $lookup) === false) {
+        $join .= " LEFT JOIN {$lookup} ON ({$wpdb->posts}.ID = {$lookup}.product_id) ";
+    }
+
+    return $join;
+}
+add_filter('posts_join', 'localbox_add_price_lookup_join', 10, 2);
+
+/**
+ * Handle price-based sorting on product archives.
+ */
+function localbox_apply_price_sort_orderby($orderby, $query)
+{
+    if (is_admin() || !$query->is_main_query()) {
+        return $orderby;
+    }
+
+    if (!(function_exists('is_shop') && (is_shop() || is_post_type_archive('product') || is_tax(array('product_cat', 'product_tag'))))) {
+        return $orderby;
+    }
+
+    $orderby_param = isset($_GET['orderby']) ? sanitize_text_field(wp_unslash($_GET['orderby'])) : '';
+
+    if (!$orderby_param) {
+        return $orderby;
+    }
+
+    if ($orderby_param === 'price-asc') {
+        global $wpdb;
+        $lookup = isset($wpdb->wc_product_meta_lookup) ? $wpdb->wc_product_meta_lookup : $wpdb->prefix . 'wc_product_meta_lookup';
+        return "{$lookup}.min_price ASC";
+    } elseif ($orderby_param === 'price-desc') {
+        global $wpdb;
+        $lookup = isset($wpdb->wc_product_meta_lookup) ? $wpdb->wc_product_meta_lookup : $wpdb->prefix . 'wc_product_meta_lookup';
+        return "{$lookup}.min_price DESC";
+    }
+
+    return $orderby;
+}
+add_filter('posts_orderby', 'localbox_apply_price_sort_orderby', 20, 2);
+/**
+ * Strip empty filter query vars on shop/product archives to avoid 404s
+ * when URLs contain bare keys like ?product_cat&min_price.
+ */
+function localbox_cleanup_empty_shop_params()
+{
+	if (!class_exists('WooCommerce')) {
+		return;
+	}
+
+	if (! (function_exists('is_shop') && (is_shop() || is_post_type_archive('product') || is_tax(array('product_cat','product_tag'))))) {
+		return;
+	}
+
+	if (empty($_GET)) {
+		return;
+	}
+
+	$allowedPrefixes = array('filter_', 'query_type_');
+	$allowedExact = array('product_cat','min_price','max_price','orderby','order','s','paged');
+
+	$clean = array();
+	foreach ($_GET as $k => $v) {
+		$unslashed = wp_unslash($v);
+		$isAllowed = in_array($k, $allowedExact, true) || array_reduce($allowedPrefixes, function($carry, $p) use ($k){ return $carry || strpos($k, $p) === 0; }, false);
+		if (!$isAllowed) {
+			continue; // drop unknown params
+		}
+		if ($unslashed === '' || $unslashed === null) {
+			continue; // drop empties
+		}
+		$clean[$k] = $unslashed;
+	}
+
+	// If no change, do nothing
+	$hadEmpties = false;
+	foreach ($_GET as $k => $v) {
+		if ($v === '' || $v === null) { $hadEmpties = true; break; }
+	}
+
+	if (!$hadEmpties) {
+		return;
+	}
+
+	// Determine base URL (shop archive or current term archive)
+	if (is_shop() || is_post_type_archive('product')) {
+		$base = wc_get_page_permalink('shop');
+	} else {
+		$qo = get_queried_object();
+		$base = $qo && isset($qo->term_id) ? get_term_link($qo) : home_url(add_query_arg(array(), $GLOBALS['wp']->request));
+	}
+
+	if (!is_wp_error($base)) {
+		wp_safe_redirect(esc_url_raw(add_query_arg($clean, $base)));
+		exit;
+	}
+}
+add_action('template_redirect', 'localbox_cleanup_empty_shop_params', 8);
+
+/**
+ * Strip empty query vars early to avoid WordPress generating a 404
+ * when tax query vars like product_cat are present but empty.
+ */
+function localbox_clean_empty_shop_request($query_vars)
+{
+	if (is_admin()) {
+		return $query_vars;
+	}
+
+	// Only clean for front-end product-related routes; cheap path check.
+	$shop_id = function_exists('wc_get_page_id') ? wc_get_page_id('shop') : 0;
+	$shop_slug = $shop_id ? basename(get_permalink($shop_id)) : 'shop';
+	$req_uri = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '';
+	$looks_like_shop = strpos($req_uri, '/' . $shop_slug) !== false || strpos($req_uri, '/product-category/') !== false || (isset($query_vars['post_type']) && $query_vars['post_type'] === 'product');
+
+	if (!$looks_like_shop) {
+		return $query_vars;
+	}
+
+// Drop empties for known keys (prevents 404)
+    foreach ($query_vars as $k => $v) {
+        $is_tax = in_array($k, array('product_cat','product_tag'), true);
+        $is_attr_filter = (strpos($k, 'filter_') === 0) || (strpos($k, 'query_type_') === 0);
+        $is_orderby = ($k === 'orderby');
+        if (!($is_tax || $is_attr_filter || $is_orderby)) {
+            continue;
+        }
+        if ($v === '' || $v === null) {
+            unset($query_vars[$k]);
+		}
+	}
+
+	return $query_vars;
+}
+add_filter('request', 'localbox_clean_empty_shop_request', 8);
+
+/**
+ * Prevent WordPress from forcing a 404 on product archives with custom query vars.
+ */
+function localbox_prevent_404_on_shop($preempt, $wp_query)
+{
+	if (is_admin() || !$wp_query->is_main_query()) {
+		return $preempt;
+	}
+	// If it's the Woo shop, product archive, or product tax, don't treat as 404
+	if ((function_exists('is_shop') && (is_shop() || is_post_type_archive('product'))) || is_tax(array('product_cat','product_tag'))) {
+		return false; // do not handle 404
+	}
+	return $preempt;
+}
+add_filter('pre_handle_404', 'localbox_prevent_404_on_shop', 10, 2);
+
+/**
  * Ajouter un formulaire Add to Cart avec quantité personnalisée pour la boucle shop
  */
 function localbox_custom_add_to_cart_loop()
