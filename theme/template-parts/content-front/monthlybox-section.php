@@ -1,5 +1,5 @@
 <!-- VAGUE -->
-<div class="relative w-full overflow-hidden pointer-events-none z-10" style="margin-top: -1px;background-color: #F7F3F3;">
+<div class="relative w-full overflow-hidden pointer-events-none z-10" style="margin-top: 0px;background-color: #F7F3F3;">
     <svg class="w-full h-auto" viewBox="0 0 1440 140" xmlns="http://www.w3.org/2000/svg">
         <path d="
             M0,40

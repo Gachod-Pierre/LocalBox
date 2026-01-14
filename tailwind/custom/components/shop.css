@@ -269,12 +269,12 @@
 	/* Bouton Add to Cart dans le formulaire */
 	.product-add-to-cart-form .button {
 		flex: 1;
-		padding: 10px 15px !important;
+		padding: 12px 20px !important;
 		margin: 0 !important;
-		background-color: #fff3e0 !important;
-		color: #000 !important;
-		border: 2px solid #000 !important;
-		border-radius: 6px !important;
+		background-color: #e91e63 !important;
+		color: white !important;
+		border: none !important;
+		border-radius: 25px !important;
 		cursor: pointer !important;
 		font-weight: 700 !important;
 		font-size: 11px !important;
@@ -290,7 +290,7 @@
 	}
 
 	.product-add-to-cart-form .button:hover {
-		background-color: #000 !important;
+		background-color: #c2185b !important;
 		color: white !important;
 	}
 
@@ -344,6 +344,4 @@
 			grid-template-columns: repeat(5, 1fr) !important;
 		}
 	}
-
-
 }
