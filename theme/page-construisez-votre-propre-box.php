@@ -103,19 +103,31 @@ get_header();
 										$region_image_url = $region_image ? wp_get_attachment_url($region_image) : '';
 										?>
 										<div class="carousel-item w-full flex-shrink-0" data-region="<?php echo esc_attr($region_slug); ?>">
-											<div class="flex flex-col md:flex-row items-center justify-between gap-8 py-12">
+											<div class="flex flex-col md:flex-row items-center justify-between gap-8 py-12 px-8">
 												<!-- Left: Region Info -->
-												<div class="w-full md:w-1/3 flex flex-col justify-center">
+												<div class="w-full md:w-1/4 flex flex-col justify-center">
 													<p class="text-sm italic text-gray-600 mb-2">Soleil et convivialité</p>
 													<h4 class="text-5xl md:text-6xl font-black mb-6 leading-tight text-[#2d5a3d]"><?php echo esc_html($region_name); ?></h4>
-													<button type="button" class="select-region px-8 py-3 bg-[#2d5a3d] text-white rounded-full font-bold uppercase text-sm w-fit" data-region="<?php echo esc_attr($region_slug); ?>">
-														Choisir cette box
-													</button>
+													<div class="flex items-center gap-4">
+														<button type="button" class="select-region px-8 py-3 bg-[#2d5a3d] text-white rounded-full font-bold uppercase text-sm w-fit" data-region="<?php echo esc_attr($region_slug); ?>">
+															Choisir cette box
+														</button>
+														<button class="carousel-prev flex-shrink-0 p-2 hover:opacity-70 transition-opacity">
+															<svg width="29" height="25" viewBox="0 0 29 25" fill="none" xmlns="http://www.w3.org/2000/svg" class="scale-x-[-1]">
+																<path d="M20.3653 14.8754L19.3432 15.3075C16.4458 16.7624 14.2736 20.33 14.0782 23.5478C14.074 23.6196 14.0523 23.7473 14.1305 23.7763L19.4578 25C19.5106 22.6307 20.1894 20.2023 21.7113 18.3602C23.4931 16.2035 26.251 15.1213 29 14.8754L29 10.112C26.2494 9.83388 23.4894 8.75055 21.7118 6.57756C20.2079 4.73911 19.5186 2.35927 19.4589 8.50574e-07L14.0766 1.23953C14.3386 4.77552 16.4125 8.31363 19.6876 9.81806C19.8973 9.91462 20.1419 10.0233 20.3659 10.0629C20.3801 10.1843 20.3152 10.094 20.2877 10.094L0.0475394 10.094L0.000527078 10.141L0.000526871 14.8754L20.3653 14.8754Z" fill="#154F41"/>
+															</svg>
+														</button>
+														<button class="carousel-next flex-shrink-0 p-2 hover:opacity-70 transition-opacity">
+															<svg width="29" height="25" viewBox="0 0 29 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+																<path d="M20.3653 14.8754L19.3432 15.3075C16.4458 16.7624 14.2736 20.33 14.0782 23.5478C14.074 23.6196 14.0523 23.7473 14.1305 23.7763L19.4578 25C19.5106 22.6307 20.1894 20.2023 21.7113 18.3602C23.4931 16.2035 26.251 15.1213 29 14.8754L29 10.112C26.2494 9.83388 23.4894 8.75055 21.7118 6.57756C20.2079 4.73911 19.5186 2.35927 19.4589 8.50574e-07L14.0766 1.23953C14.3386 4.77552 16.4125 8.31363 19.6876 9.81806C19.8973 9.91462 20.1419 10.0233 20.3659 10.0629C20.3801 10.1843 20.3152 10.094 20.2877 10.094L0.0475394 10.094L0.000527078 10.141L0.000526871 14.8754L20.3653 14.8754Z" fill="#154F41"/>
+															</svg>
+														</button>
+													</div>
 												</div>
 
-												<!-- Right: Region Image -->
-												<div class="w-full md:w-2/3 flex justify-center md:justify-end">
-													<div class="relative w-80 h-80 md:w-96 md:h-96 flex items-center justify-center">
+												<!-- Center: Region Image (Large) -->
+												<div class="w-full md:w-3/4 flex justify-center items-center">
+													<div class="relative w-96 h-96 md:w-full md:h-96 flex items-center justify-center">
 														<?php if ($region_image_url) : ?>
 															<img src="<?php echo esc_url($region_image_url); ?>" alt="<?php echo esc_attr($region_name); ?>" class="w-full h-full object-contain">
 														<?php else : ?>
@@ -132,10 +144,6 @@ get_header();
 
 									echo '</div>'; // .carousel-items
 									echo '</div>'; // .carousel-container
-
-									// Navigation Arrows
-									echo '<button class="carousel-prev absolute left-0 top-1/2 -translate-y-1/2 z-10 px-4 py-2 text-3xl font-bold text-[#2d5a3d]">‹</button>';
-									echo '<button class="carousel-next absolute right-0 top-1/2 -translate-y-1/2 z-10 px-4 py-2 text-3xl font-bold text-[#2d5a3d]">›</button>';
 
 									echo '</div>'; // .carousel-wrapper
 								}
@@ -193,8 +201,6 @@ get_header();
 
 		(function() {
 			const carousel = document.getElementById('productCarousel');
-			const prevBtn = document.querySelector('.carousel-prev');
-			const nextBtn = document.querySelector('.carousel-next');
 			const currentSpan = document.getElementById('carouselCurrent');
 			let currentIndex = 0;
 			const itemCount = carousel ? carousel.querySelectorAll('.carousel-item').length : 0;
@@ -206,19 +212,33 @@ get_header();
 				if (currentSpan) currentSpan.textContent = currentIndex + 1;
 			}
 
-			if (prevBtn) {
-				prevBtn.addEventListener('click', function() {
-					currentIndex = (currentIndex - 1 + itemCount) % itemCount;
-					updateCarousel();
+			function setupCarouselButtons() {
+				const prevBtns = document.querySelectorAll('.carousel-prev');
+				const nextBtns = document.querySelectorAll('.carousel-next');
+
+				prevBtns.forEach(btn => {
+					btn.removeEventListener('click', prevClickHandler);
+					btn.addEventListener('click', prevClickHandler);
+				});
+
+				nextBtns.forEach(btn => {
+					btn.removeEventListener('click', nextClickHandler);
+					btn.addEventListener('click', nextClickHandler);
 				});
 			}
 
-			if (nextBtn) {
-				nextBtn.addEventListener('click', function() {
-					currentIndex = (currentIndex + 1) % itemCount;
-					updateCarousel();
-				});
+			function prevClickHandler() {
+				currentIndex = (currentIndex - 1 + itemCount) % itemCount;
+				updateCarousel();
 			}
+
+			function nextClickHandler() {
+				currentIndex = (currentIndex + 1) % itemCount;
+				updateCarousel();
+			}
+
+			// Initial setup
+			setupCarouselButtons();
 
 			// Handle "Choisir cette box" button - filter products by region without page reload
 			const selectRegionBtns = document.querySelectorAll('.select-region');

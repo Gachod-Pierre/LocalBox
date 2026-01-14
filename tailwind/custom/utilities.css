@@ -6,3 +6,8 @@
  *
  * https://tailwindcss.com/docs/adding-custom-styles#adding-custom-utilities
  */
+@media (width >= 48rem) {
+	.md\:w-1\/6 {
+		width: calc(1 / 2 * 100%);
+	}
+}
