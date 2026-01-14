@@ -65,15 +65,16 @@
 	style="top: var(--admin-bar-height, 0px);">
 	<!-- Top bar du volet -->
 	<div class="flex items-center justify-end px-6 h-20 shrink-0 gap-6">
-		<button
+		<a
+			href="<?php echo esc_url(wc_get_cart_url()); ?>"
 			class="focus:outline-none cursor-pointer"
-			aria-label="Box">
+			aria-label="Panier">
 			<img
 				id="sidebarBoxIcon"
 				src="<?php echo esc_url(get_template_directory_uri() . '/assets/svg/icon-box.svg'); ?>"
-				alt="Box"
+				alt="Panier"
 				class="h-7 w-7 opacity-0 pointer-events-none transition-opacity duration-200 brightness-0 invert" />
-		</button>
+		</a>
 
 		<button
 			id="sidebarCloseBtn"
