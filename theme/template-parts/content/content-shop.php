@@ -21,27 +21,37 @@
 	<section class="shop-products px-5 py- bg-[#f5f1ed] md:px-10">
 		<h2 class="shop-title text-5xl font-black uppercase pb-20 pt-10 md:text-4xl">Tous nos produits</h2>
 
-		<!-- Filtres -->
-		<div class="shop-filters flex gap-5 mb-12 flex-wrap items-center">
-			<div class="filter-item flex-1 min-w-[150px]">
-				<button class="filter-btn w-full px-5 py-3 bg-white border-2 border-black rounded-full text-xs font-bold uppercase cursor-pointer tracking-widest transition-all hover:bg-gray-100 flex items-center justify-between">Sectaire <span class="text-[10px] ml-2.5">▼</span></button>
-			</div>
-			<div class="filter-item flex-1 min-w-[150px]">
-				<button class="filter-btn w-full px-5 py-3 bg-white border-2 border-black rounded-full text-xs font-bold uppercase cursor-pointer tracking-widest transition-all hover:bg-gray-100 flex items-center justify-between">Type de produits <span class="text-[10px] ml-2.5">▼</span></button>
-			</div>
-			<div class="filter-item flex-1 min-w-[150px]">
-				<button class="filter-btn w-full px-5 py-3 bg-white border-2 border-black rounded-full text-xs font-bold uppercase cursor-pointer tracking-widest transition-all hover:bg-gray-100 flex items-center justify-between">Prix <span class="text-[10px] ml-2.5">▼</span></button>
-			</div>
-			<div class="filter-item flex-1 min-w-[150px]">
-				<button class="filter-btn w-full px-5 py-3 bg-white border-2 border-black rounded-full text-xs font-bold uppercase cursor-pointer tracking-widest transition-all hover:bg-gray-100 flex items-center justify-between">Quantité <span class="text-[10px] ml-2.5">▼</span></button>
-			</div>
-		</div>
+		<?php
+		// If filter params are present, redirect to the real shop archive so Woo filters apply.
+		if (class_exists('WooCommerce')) {
+			$has_filters = false;
+			foreach (array_keys($_GET) as $key) {
+				if ($key === 'product_cat' || $key === 'orderby' || strpos($key, 'filter_') === 0) {
+					$has_filters = true;
+					break;
+				}
+			}
+			// Avoid redirect loops: never redirect if we're already on the real shop archive
+			if ($has_filters && !is_shop() && !is_post_type_archive('product')) {
+				$shop_url = wc_get_page_permalink('shop');
+				$args = array_map('wp_unslash', $_GET);
+				$args = array_filter($args, function ($v) {
+					return $v !== '' && $v !== null;
+				});
+				wp_safe_redirect(esc_url_raw(add_query_arg($args, $shop_url)));
+				exit;
+			}
+		}
+		?>
+
+		<!-- Filtres (liés aux filtres WooCommerce) -->
+		<?php get_template_part('template-parts/woocommerce/filter-bar'); ?>
 
 		<?php
 		// Afficher les produits (si WooCommerce est actif)
 		if (class_exists('WooCommerce')) {
-			// WooCommerce shortcode avec 4 colonnes
-			echo do_shortcode('[products limit="8" columns="4" paginate="true"]');
+			// Listing basique via shortcode (non filtré ici). Les filtres redirigent vers l'archive.
+			echo do_shortcode('[products limit="10" columns="5" paginate="true"]');
 		} else {
 			// Afficher un message si WooCommerce n'est pas activé
 			echo '<div class="shop-notice p-5 bg-yellow-100 border border-yellow-300 rounded text-yellow-900 text-center">';
@@ -53,9 +63,14 @@
 
 
 	<?php
-	// Ajout de la section "makeyourown" avant le footer
 	get_template_part('template-parts/content-front/makeyourown-section');
 	?>
+
+	<?php
+	get_template_part('template-parts/content-front/content-subscription');
+	?>
+
+
 
 	<?php if (get_edit_post_link()) : ?>
 		<footer class="entry-footer">

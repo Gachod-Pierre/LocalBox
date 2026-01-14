@@ -38,6 +38,9 @@ do_action('woocommerce_before_main_content');
  */
 do_action('woocommerce_shop_loop_header');
 
+// Custom filter bar (submits to this archive using WooCommerce vars)
+get_template_part('template-parts/woocommerce/filter-bar');
+
 if (woocommerce_product_loop()) {
 
 	/**
