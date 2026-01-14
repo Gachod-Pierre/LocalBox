@@ -33,5 +33,9 @@ get_header();
 		</main><!-- #main -->
 	</section><!-- #primary -->
 
+	<?php
+	get_template_part('template-parts/content-front/monthlybox-section');
+	?>
+
 <?php
 get_footer();

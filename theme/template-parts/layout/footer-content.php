@@ -56,7 +56,7 @@
 				<a href="#">BOX DU MOIS</a>
 				<a href="#">CRÉER MA BOX</a>
 				<a href="#">COMPTE</a>
-				<a href="#">PARTENARIAT</a>
+				<a href="/inscription-producteur-artisan/">PARTENARIAT</a>
 			</div>
 		</div>
 

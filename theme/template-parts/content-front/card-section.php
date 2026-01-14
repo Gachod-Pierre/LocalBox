@@ -22,11 +22,12 @@
                 <!-- wrapper -->
                 <div class="relative w-full max-w-xl">
 
-                    <!-- Image de la box -->
+                    <!-- Mascotte de la région -->
                     <img
-                        src="<?php echo get_template_directory_uri(); ?>/assets/svg/main-box.svg"
-                        class="main-box w-[clamp(220px,25vw,360px)] mx-auto block relative z-10"
-                        alt="Box Occitanie">
+                        id="region-mascotte"
+                        src="<?php echo get_template_directory_uri(); ?>/assets/svg/mascotte-cheese.svg"
+                        class="region-mascotte w-[clamp(150px,20vw,250px)] mx-auto block relative z-10"
+                        alt="Mascotte Occitanie">
 
                     <!-- Contenu qui remonte sur la box -->
                     <div class="relative z-20 -mt-8 md:-mt-14">
@@ -72,7 +73,7 @@
                 const titleEl = section.querySelector('#region-title');
                 const descEl = section.querySelector('#region-description');
                 const linkEl = section.querySelector('#region-link');
-                const boxImg = section.querySelector('.main-box');
+                const mascotteImg = section.querySelector('#region-mascotte');
                 const svgGroup = section.querySelector('.france-card');
                 if (!titleEl || !linkEl || !svgGroup) return;
 
@@ -80,77 +81,90 @@
                     title: titleEl.textContent.trim(),
                     description: descEl ? descEl.textContent.trim() : '',
                     link: linkEl.getAttribute('href') || '#',
-                    alt: boxImg ? boxImg.getAttribute('alt') : ''
+                    mascotte: mascotteImg ? mascotteImg.getAttribute('src') : ''
                 };
 
                 const regionMap = {
                     'corse': {
                         name: 'Corse',
                         url: 'http://localbox.local/product/box-corse/',
-                        description: 'Île de caractère, la Corse offre des saveurs authentiques entre mer turquoise et montagnes sauvages.'
+                        description: 'Île de caractère, la Corse offre des saveurs authentiques entre mer turquoise et montagnes sauvages.',
+                        mascotte: 'mascotte-jambon.svg'
                     },
                     'hauts-de-france': {
                         name: 'Hauts-de-France',
                         url: 'http://localbox.local/product/box-hauts-de-france/',
-                        description: 'Terre de convivialité, entre estaminets, produits gourmands et patrimoine industriel réinventé.'
+                        description: 'Terre de convivialité, entre estaminets, produits gourmands et patrimoine industriel réinventé.',
+                        mascotte: 'mascotte-wafflefull.svg'
                     },
                     'normandie': {
                         name: 'Normandie',
                         url: 'http://localbox.local/product/box-normandie/',
-                        description: 'Falaises, vergers et savoir-faire laitier : une région généreuse et authentique.'
+                        description: 'Falaises, vergers et savoir-faire laitier : une région généreuse et authentique.',
+                        mascotte: 'mascotte-cheese.svg'
                     },
                     'nouvelle-aquitaine': {
                         name: 'Nouvelle-Aquitaine',
                         url: 'http://localbox.local/product/box-nouvelle-aquitaine/',
-                        description: 'Entre océan et vignobles, des produits de terroir raffinés et une douceur de vivre.'
+                        description: 'Entre océan et vignobles, des produits de terroir raffinés et une douceur de vivre.',
+                        mascotte: 'mascotte-wine.svg'
                     },
                     'pays-de-la-loire': {
                         name: 'Pays de la Loire',
                         url: 'http://localbox.local/product/box-pays-de-la-loire/',
-                        description: 'Châteaux, littoral et artisans passionnés : une sélection élégante et gourmande.'
+                        description: 'Châteaux, littoral et artisans passionnés : une sélection élégante et gourmande.',
+                        mascotte: 'mascotte-wafflefull.svg'
                     },
                     'occitanie': {
                         name: 'Occitanie',
                         url: 'http://localbox.local/product/box-occitanie',
-                        description: 'Entre mer et montagne, un art de vivre solaire mêlant patrimoine et gastronomie du Sud.'
+                        description: 'Entre mer et montagne, un art de vivre solaire mêlant patrimoine et gastronomie du Sud.',
+                        mascotte: 'mascotte-saucisse.svg'
                     },
                     // Le SVG utilise "provence-alpes-cotes-azur"
                     'provence-alpes-cotes-azur': {
                         name: 'Provence-Alpes-Côte d’Azur',
                         url: 'http://localbox.local/product/box-provence-alpes-cote-dazur/',
-                        description: 'Parfums de garrigue, huile d’olive et douceurs ensoleillées : l’esprit Méditerranée.'
+                        description: 'Parfums de garrigue, huile d\'olive et douceurs ensoleillées : l\'esprit Méditerranée.',
+                        mascotte: 'mascotte-oil.svg'
                     },
                     'auvergne-rhone-alpes': {
                         name: 'Auvergne-Rhône-Alpes',
                         url: 'http://localbox.local/product/box-auvergne-rhone-alpes/',
-                        description: 'Massifs et lacs, fromages et charcuteries : une région de caractère et de traditions.'
+                        description: 'Massifs et lacs, fromages et charcuteries : une région de caractère et de traditions.',
+                        mascotte: 'mascotte-noix.svg'
                     },
                     'bourgogne-franche-comte': {
                         name: 'Bourgogne-Franche-Comté',
                         url: 'http://localbox.local/product/box-bourgogne-franche-comte/',
-                        description: 'Vins, moutardes et savoir-faire ancestral : une élégance gourmande au naturel.'
+                        description: 'Vins, moutardes et savoir-faire ancestral : une élégance gourmande au naturel.',
+                        mascotte: 'mascotte-wine.svg'
                     },
                     'bretagne': {
                         name: 'Bretagne',
                         url: 'http://localbox.local/product/box-bretagne/',
-                        description: 'Vents salés, crêpes et caramel au beurre : le goût de la mer et du terroir.'
+                        description: 'Vents salés, crêpes et caramel au beurre : le goût de la mer et du terroir.',
+                        mascotte: 'mascotte-crepe.svg'
                     },
                     'centre-val-de-loire': {
                         name: 'Centre-Val de Loire',
                         url: 'http://localbox.local/product/box-centre-val-de-loire/',
-                        description: 'Châteaux, rivières et gourmandises délicates : une balade poétique au cœur de la France.'
+                        description: 'Châteaux, rivières et gourmandises délicates : une balade poétique au cœur de la France.',
+                        mascotte: 'mascotte-macaron.svg'
                     },
                     // Le SVG utilise "grandest"
                     'grandest': {
                         name: 'Grand Est',
                         url: 'http://localbox.local/product/box-grand-est/',
-                        description: 'Cités historiques, vignobles et spécialités généreuses : un mélange d’arts et de saveurs.'
+                        description: 'Cités historiques, vignobles et spécialités généreuses : un mélange d\'arts et de saveurs.',
+                        mascotte: 'mascotte-bretzel.svg'
                     },
                     // Pas d’URL fournie pour IDF
                     'ile-de-france': {
                         name: 'Île-de-France',
                         url: '#',
-                        description: 'Capitale créative et marchés gourmands : un carrefour de cultures et de goûts.'
+                        description: 'Capitale créative et marchés gourmands : un carrefour de cultures et de goûts.',
+                        mascotte: 'mascotte-macaron.svg'
                     }
                 };
 
@@ -167,7 +181,10 @@
                         titleEl.textContent = info.name;
                         linkEl.setAttribute('href', info.url || '#');
                         if (descEl && info.description) descEl.textContent = info.description;
-                        if (boxImg && info.name) boxImg.setAttribute('alt', 'Box ' + info.name);
+                        if (mascotteImg && info.mascotte) {
+                            mascotteImg.setAttribute('src', '<?php echo get_template_directory_uri(); ?>/assets/svg/' + info.mascotte);
+                            mascotteImg.setAttribute('alt', 'Mascotte ' + info.name);
+                        }
                     });
                 });
 
@@ -177,7 +194,7 @@
                     titleEl.textContent = defaults.title;
                     linkEl.setAttribute('href', defaults.link);
                     if (descEl && defaults.description) descEl.textContent = defaults.description;
-                    if (boxImg && defaults.alt) boxImg.setAttribute('alt', defaults.alt);
+                    if (mascotteImg && defaults.mascotte) mascotteImg.setAttribute('src', defaults.mascotte);
                 });
             });
         </script>

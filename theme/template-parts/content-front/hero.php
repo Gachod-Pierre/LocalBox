@@ -7,7 +7,7 @@
         <img src="https://localbox.pierre-gachod.fr/wp-content/uploads/2026/01/Provence_Alpes.png"
             class="main-box relative w-[clamp(400px,25vw,500px)]" alt="Box">
 
-        <h1 class="hero-title font-extrabold leading-none text-4xl md:text-5xl lg:text-6xl tracking-tight text-black mt-4">
+        <h1 class="hero-title font-extrabold leading-none text-4xl md:text-5xl lg:text-6xl tracking-tight text-black -mt-40">
             LES BOX DE<br>VOS RÉGIONS<br>PRÉFÉRÉES
         </h1>
 

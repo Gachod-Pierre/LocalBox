@@ -16,13 +16,13 @@
 				<!-- Partie gauche: Box -->
 				<div class="lg:w-1/2 flex flex-col justify-center relative order-1 lg:order-1">
 					<div class="flex justify-center items-center h-full">
-						<img src="<?php echo get_template_directory_uri(); ?>/assets/svg/template-box.jpg" alt="Box" class="w-96 max-w-full" style="margin-left:0;">
+						<img src="<?php echo get_template_directory_uri(); ?>/assets/svg/makeurown.png" alt="Box" class="w-96 max-w-full rounded-3xl" style="margin-left:0;">
 					</div>
 				</div>
 				<!-- Partie droite: Texte -->
 				<div class="lg:w-1/2 order-2 lg:order-2 flex flex-col justify-center items-start">
 					<h3 class="font-black uppercase tracking-tight leading-none text-4xl md:text-6xl lg:text-7xl text-[#C92358] mb-6 text-left">
-						CONSTRUIT<br>TA BOX
+						CONSTRUIS<br>TA BOX
 					</h3>
 					<p class="text-gray-800 text-base md:text-lg leading-relaxed mb-4 text-left">
 						C'est toi qui la composeras avec des produits de chez nous, ou d'un autre coin que tu aimes. Tu choisis tes goûts, tes surprises, et tu réunis en un seul coffret tout ce qui te fait vibrer : des petites gourmandises, des artisanats locaux, ou même des objets spéciaux qui racontent une histoire.
