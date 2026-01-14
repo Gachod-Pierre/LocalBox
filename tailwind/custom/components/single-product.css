@@ -85,11 +85,6 @@
 		padding-top: 0 !important;
 	}
 
-	/* Article produit - Padding top */
-	article.product {
-		padding-top: 40px !important;
-	}
-
 	/* Summary - Fond et padding mobile */
 	.single-product .summary.entry-summary {
 		background-color: #f5f1ed !important;
@@ -98,9 +93,6 @@
 	}
 
 	@media (max-width: 640px) {
-		article.product {
-			padding: 0 20px !important;
-		}
 
 		#comments {
 			padding: 0 20px !important;
@@ -167,6 +159,14 @@
 		border: none !important;
 		width: 100% !important;
 		height: 100% !important;
+		transition:
+			transform 0.3s,
+			box-shadow 0.3s !important;
+	}
+
+	.single-product .related li.product:hover {
+		transform: translateY(-3px) !important;
+		box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1) !important;
 	}
 
 	.single-product .related .woocommerce-loop-product__link {
