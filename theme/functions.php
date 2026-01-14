@@ -356,28 +356,28 @@ require get_template_directory() . '/inc/subscription-handler.php';
  */
 function localbox_add_price_lookup_join($join, $query)
 {
-    if (is_admin() || !$query->is_main_query()) {
-        return $join;
-    }
+	if (is_admin() || !$query->is_main_query()) {
+		return $join;
+	}
 
-    if (!(function_exists('is_shop') && (is_shop() || is_post_type_archive('product') || is_tax(array('product_cat', 'product_tag'))))) {
-        return $join;
-    }
+	if (!(function_exists('is_shop') && (is_shop() || is_post_type_archive('product') || is_tax(array('product_cat', 'product_tag'))))) {
+		return $join;
+	}
 
-    $orderby_param = isset($_GET['orderby']) ? sanitize_text_field(wp_unslash($_GET['orderby'])) : '';
-    if (!$orderby_param || ($orderby_param !== 'price-asc' && $orderby_param !== 'price-desc')) {
-        return $join;
-    }
+	$orderby_param = isset($_GET['orderby']) ? sanitize_text_field(wp_unslash($_GET['orderby'])) : '';
+	if (!$orderby_param || ($orderby_param !== 'price-asc' && $orderby_param !== 'price-desc')) {
+		return $join;
+	}
 
-    global $wpdb;
-    $lookup = isset($wpdb->wc_product_meta_lookup) ? $wpdb->wc_product_meta_lookup : $wpdb->prefix . 'wc_product_meta_lookup';
+	global $wpdb;
+	$lookup = isset($wpdb->wc_product_meta_lookup) ? $wpdb->wc_product_meta_lookup : $wpdb->prefix . 'wc_product_meta_lookup';
 
-    // Add join if not already present
-    if (strpos($join, $lookup) === false) {
-        $join .= " LEFT JOIN {$lookup} ON ({$wpdb->posts}.ID = {$lookup}.product_id) ";
-    }
+	// Add join if not already present
+	if (strpos($join, $lookup) === false) {
+		$join .= " LEFT JOIN {$lookup} ON ({$wpdb->posts}.ID = {$lookup}.product_id) ";
+	}
 
-    return $join;
+	return $join;
 }
 add_filter('posts_join', 'localbox_add_price_lookup_join', 10, 2);
 
@@ -386,31 +386,31 @@ add_filter('posts_join', 'localbox_add_price_lookup_join', 10, 2);
  */
 function localbox_apply_price_sort_orderby($orderby, $query)
 {
-    if (is_admin() || !$query->is_main_query()) {
-        return $orderby;
-    }
+	if (is_admin() || !$query->is_main_query()) {
+		return $orderby;
+	}
 
-    if (!(function_exists('is_shop') && (is_shop() || is_post_type_archive('product') || is_tax(array('product_cat', 'product_tag'))))) {
-        return $orderby;
-    }
+	if (!(function_exists('is_shop') && (is_shop() || is_post_type_archive('product') || is_tax(array('product_cat', 'product_tag'))))) {
+		return $orderby;
+	}
 
-    $orderby_param = isset($_GET['orderby']) ? sanitize_text_field(wp_unslash($_GET['orderby'])) : '';
+	$orderby_param = isset($_GET['orderby']) ? sanitize_text_field(wp_unslash($_GET['orderby'])) : '';
 
-    if (!$orderby_param) {
-        return $orderby;
-    }
+	if (!$orderby_param) {
+		return $orderby;
+	}
 
-    if ($orderby_param === 'price-asc') {
-        global $wpdb;
-        $lookup = isset($wpdb->wc_product_meta_lookup) ? $wpdb->wc_product_meta_lookup : $wpdb->prefix . 'wc_product_meta_lookup';
-        return "{$lookup}.min_price ASC";
-    } elseif ($orderby_param === 'price-desc') {
-        global $wpdb;
-        $lookup = isset($wpdb->wc_product_meta_lookup) ? $wpdb->wc_product_meta_lookup : $wpdb->prefix . 'wc_product_meta_lookup';
-        return "{$lookup}.min_price DESC";
-    }
+	if ($orderby_param === 'price-asc') {
+		global $wpdb;
+		$lookup = isset($wpdb->wc_product_meta_lookup) ? $wpdb->wc_product_meta_lookup : $wpdb->prefix . 'wc_product_meta_lookup';
+		return "{$lookup}.min_price ASC";
+	} elseif ($orderby_param === 'price-desc') {
+		global $wpdb;
+		$lookup = isset($wpdb->wc_product_meta_lookup) ? $wpdb->wc_product_meta_lookup : $wpdb->prefix . 'wc_product_meta_lookup';
+		return "{$lookup}.min_price DESC";
+	}
 
-    return $orderby;
+	return $orderby;
 }
 add_filter('posts_orderby', 'localbox_apply_price_sort_orderby', 20, 2);
 /**
@@ -423,7 +423,7 @@ function localbox_cleanup_empty_shop_params()
 		return;
 	}
 
-	if (! (function_exists('is_shop') && (is_shop() || is_post_type_archive('product') || is_tax(array('product_cat','product_tag'))))) {
+	if (! (function_exists('is_shop') && (is_shop() || is_post_type_archive('product') || is_tax(array('product_cat', 'product_tag'))))) {
 		return;
 	}
 
@@ -432,12 +432,14 @@ function localbox_cleanup_empty_shop_params()
 	}
 
 	$allowedPrefixes = array('filter_', 'query_type_');
-	$allowedExact = array('product_cat','min_price','max_price','orderby','order','s','paged');
+	$allowedExact = array('product_cat', 'min_price', 'max_price', 'orderby', 'order', 's', 'paged');
 
 	$clean = array();
 	foreach ($_GET as $k => $v) {
 		$unslashed = wp_unslash($v);
-		$isAllowed = in_array($k, $allowedExact, true) || array_reduce($allowedPrefixes, function($carry, $p) use ($k){ return $carry || strpos($k, $p) === 0; }, false);
+		$isAllowed = in_array($k, $allowedExact, true) || array_reduce($allowedPrefixes, function ($carry, $p) use ($k) {
+			return $carry || strpos($k, $p) === 0;
+		}, false);
 		if (!$isAllowed) {
 			continue; // drop unknown params
 		}
@@ -450,7 +452,10 @@ function localbox_cleanup_empty_shop_params()
 	// If no change, do nothing
 	$hadEmpties = false;
 	foreach ($_GET as $k => $v) {
-		if ($v === '' || $v === null) { $hadEmpties = true; break; }
+		if ($v === '' || $v === null) {
+			$hadEmpties = true;
+			break;
+		}
 	}
 
 	if (!$hadEmpties) {
@@ -557,7 +562,7 @@ function localbox_prevent_404_on_shop($preempt, $wp_query)
 		return $preempt;
 	}
 	// If it's the Woo shop, product archive, or product tax, don't treat as 404
-	if ((function_exists('is_shop') && (is_shop() || is_post_type_archive('product'))) || is_tax(array('product_cat','product_tag'))) {
+	if ((function_exists('is_shop') && (is_shop() || is_post_type_archive('product'))) || is_tax(array('product_cat', 'product_tag'))) {
 		return false; // do not handle 404
 	}
 	return $preempt;
