@@ -40,19 +40,19 @@
 		"eight", "Anek Gujarati", ui-sans-serif, system-ui, sans-serif;
 
 	/* Tailles titres */
-	--text-h1: 128px;
-	--text-h2: 96px;
-	--text-h3: 80px;
-	--text-h4: 64px;
-	--text-h5: 48px;
-	--text-h6: 33px;
-	--text-h7: 24px;
-	--text-h8: 20px;
+	--text-h1: 40px;
+	--text-h2: 32px;
+	--text-h3: 24px;
+	--text-h4: 20px;
+	--text-h5: 18px;
+	--text-h6: 16px;
+	--text-h7: 14px;
+	--text-h8: 12px;
 
 	/* Tailles body */
-	--text-body1: 32px;
-	--text-body2: 24px;
-	--text-body3: 22px;
-	--text-body4: 20px;
-	--text-body5: 16px;
+	--text-body1: 16px;
+	--text-body2: 14px;
+	--text-body3: 13px;
+	--text-body4: 12px;
+	--text-body5: 11px;
 }
