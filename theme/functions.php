@@ -233,6 +233,14 @@ function localbox_enqueue_assets()
 		_TW_VERSION
 	);
 
+	// MyAccount styles (connexion/inscription)
+	wp_enqueue_style(
+		'localbox-myaccount',
+		get_template_directory_uri() . '/../../tailwind/custom/components/myaccount.css',
+		array(),
+		_TW_VERSION
+	);
+
 
 	/* -------------------------
      *  JS GÉNÉRÉS PAR ESBUILD
@@ -535,17 +543,17 @@ function localbox_clean_empty_shop_request($query_vars)
 		return $query_vars;
 	}
 
-// Drop empties for known keys (prevents 404)
-    foreach ($query_vars as $k => $v) {
-        $is_tax = in_array($k, array('product_cat','product_tag'), true);
-        $is_attr_filter = (strpos($k, 'filter_') === 0) || (strpos($k, 'query_type_') === 0);
-        $is_orderby = ($k === 'orderby');
-        $is_region = ($k === 'region');
-        if (!($is_tax || $is_attr_filter || $is_orderby || $is_region)) {
-            continue;
-        }
-        if ($v === '' || $v === null) {
-            unset($query_vars[$k]);
+	// Drop empties for known keys (prevents 404)
+	foreach ($query_vars as $k => $v) {
+		$is_tax = in_array($k, array('product_cat', 'product_tag'), true);
+		$is_attr_filter = (strpos($k, 'filter_') === 0) || (strpos($k, 'query_type_') === 0);
+		$is_orderby = ($k === 'orderby');
+		$is_region = ($k === 'region');
+		if (!($is_tax || $is_attr_filter || $is_orderby || $is_region)) {
+			continue;
+		}
+		if ($v === '' || $v === null) {
+			unset($query_vars[$k]);
 		}
 	}
 
