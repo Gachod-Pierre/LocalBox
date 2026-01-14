@@ -101,7 +101,7 @@
                         name: 'Normandie',
                         url: 'http://localbox.local/product/box-normandie/',
                         description: 'Falaises, vergers et savoir-faire laitier : une région généreuse et authentique.',
-                        mascotte: 'mascotte-cannele.svg'
+                        mascotte: 'mascotte-cheese.svg'
                     },
                     'nouvelle-aquitaine': {
                         name: 'Nouvelle-Aquitaine',
