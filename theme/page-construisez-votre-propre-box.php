@@ -31,7 +31,7 @@ get_header();
 
 					<!-- Section produits -->
 					<section class="shop-products px-5 py- bg-[#f5f1ed] md:px-10">
-						
+
 						<?php
 						// Get the filtered category from meta or default to "epicerie-fine"
 						$filtered_category = get_post_meta(get_the_ID(), '_shop_filtered_category', true);
@@ -41,7 +41,7 @@ get_header();
 
 						if (class_exists('WooCommerce')) {
 							$current_cat = isset($_GET['product_cat']) ? sanitize_text_field(wp_unslash($_GET['product_cat'])) : '';
-							
+
 							// If no category selected, force redirect with the filtered category
 							if (!$current_cat && !isset($_GET['orderby'])) {
 								wp_safe_redirect(esc_url_raw(add_query_arg('product_cat', $filtered_category, get_permalink())));
@@ -58,7 +58,7 @@ get_header();
 									C'est toi qui la composeras avec des produits de chez nous ou d'un autre coin que tu aimes. Tu choisis tes goûts, tes surprises, et tu réunis dans un seul coffret tout ce qui te fait vibrer : de petites gourmandises, de l'artisanat local ou même des objets spéciaux qui racontent une histoire. L'idée, c'est de proposer quelque chose de fun, simple à réaliser et plein de vie, qui donne envie d'ouvrir, de découvrir et de partager. Tu peux créer ta box pour toi ou pour offrir, et faire découvrir à d'autres le bonheur des produits régionaux, avec ton style et ta touche personnelle.
 								</p>
 							</div>
-							
+
 							<?php
 							if (class_exists('WooCommerce')) {
 								// Get products from "box" category for carousel
@@ -98,7 +98,7 @@ get_header();
 														<p class="text-sm font-semibold text-gray-600 mb-2 uppercase tracking-wider"><?php echo esc_html($category_name); ?></p>
 													<?php endif; ?>
 													<h3 class="text-4xl md:text-5xl font-black mb-6 leading-tight text-[#2d5a3d]"><?php the_title(); ?></h3>
-													
+
 													<!-- Add to Cart Form -->
 													<form method="post" class="cart product-add-to-cart-form inline-flex items-center gap-4">
 														<?php

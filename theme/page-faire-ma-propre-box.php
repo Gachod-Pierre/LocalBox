@@ -43,7 +43,7 @@ get_header();
 						// Force the category filter in the URL if not already set
 						if (class_exists('WooCommerce')) {
 							$current_cat = isset($_GET['product_cat']) ? sanitize_text_field(wp_unslash($_GET['product_cat'])) : '';
-							
+
 							// If no category selected, force redirect with the filtered category
 							if (!$current_cat && !isset($_GET['orderby'])) {
 								wp_safe_redirect(esc_url_raw(add_query_arg('product_cat', $filtered_category, get_permalink())));
