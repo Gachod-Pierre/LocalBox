@@ -752,7 +752,7 @@ function localbox_load_filtered_products()
 				'current' => max(1, $paged),
 				'prev_text' => '← Précédent',
 				'next_text' => 'Suivant →',
-				'type' => 'array',
+				'type' => 'plain',
 			));
 			echo '</div>';
 		}
