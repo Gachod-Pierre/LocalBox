@@ -33,6 +33,9 @@ get_header();
 					<section class="shop-products px-5 py- bg-[#f5f1ed] md:px-10">
 
 						<?php
+						// Output nonce for AJAX
+						wp_nonce_field('localbox_nonce', 'localbox_nonce_field');
+
 						// Get the filtered category from meta or default to "epicerie-fine"
 						$filtered_category = get_post_meta(get_the_ID(), '_shop_filtered_category', true);
 						if (!$filtered_category) {
@@ -53,70 +56,73 @@ get_header();
 						<!-- Carousel / Featured Products Section -->
 						<div class="featured-carousel mb-16">
 							<div class="text-center mb-12">
-								<h2 class="shop-title text-7xl md:text-6xl font-black uppercase pb-6 pt-10">Choisissez votre box</h2>
+								<h2 class="shop-title text-7xl md:text-6xl font-black uppercase pb-6 pt-10">Construisez votre box</h2>
 								<p class="text-base md:text-lg leading-relaxed max-w-3xl mx-auto px-5">
-									C'est toi qui la composeras avec des produits de chez nous ou d'un autre coin que tu aimes. Tu choisis tes goûts, tes surprises, et tu réunis dans un seul coffret tout ce qui te fait vibrer : de petites gourmandises, de l'artisanat local ou même des objets spéciaux qui racontent une histoire. L'idée, c'est de proposer quelque chose de fun, simple à réaliser et plein de vie, qui donne envie d'ouvrir, de découvrir et de partager. Tu peux créer ta box pour toi ou pour offrir, et faire découvrir à d'autres le bonheur des produits régionaux, avec ton style et ta touche personnelle.
+									C'est toi qui la composeras avec des produits de chez nous ou d'un autre coin que tu aimes. Tu choisis tes goûts, tes surprises, et tu réunis dans un seul coffret tout ce qui te fait vibrer : de petites gourmandises, de l'artisanat local ou même des objets spéciaux qui racontent une histoire.
 								</p>
 							</div>
 
 							<?php
 							if (class_exists('WooCommerce')) {
-								// Get products from "box" category for carousel
-								$carousel_args = array(
-									'post_type' => 'product',
-									'posts_per_page' => -1,
-									'tax_query' => array(
-										array(
-											'taxonomy' => 'product_cat',
-											'field' => 'slug',
-											'terms' => 'box', // Display only "box" category in carousel
-										),
-									),
-									'orderby' => 'date',
-									'order' => 'DESC',
-								);
+								// Get all region categories (excluding epicerie-fine, uncategorized, and box)
+								$excluded_slugs = array('epicerie-fine', 'uncategorized', 'box');
+								$excluded_ids = array();
 
-								$carousel_products = new WP_Query($carousel_args);
-								$total_carousel = $carousel_products->found_posts;
+								foreach ($excluded_slugs as $slug) {
+									$term = get_term_by('slug', $slug, 'product_cat');
+									if ($term && !is_wp_error($term)) {
+										$excluded_ids[] = $term->term_id;
+									}
+								}
 
-								if ($carousel_products->have_posts()) {
-									echo '<div class="carousel-wrapper relative">';
-									echo '<div class="carousel-container overflow-hidden">';
+								$region_categories = get_terms(array(
+									'taxonomy' => 'product_cat',
+									'hide_empty' => false,
+									'exclude' => $excluded_ids,
+								));
+
+								$total_carousel = count($region_categories);
+
+								if ($region_categories && !is_wp_error($region_categories) && $total_carousel > 0) {
+									echo '<div class="carousel-wrapper relative bg-[#f5f1ed] rounded-lg p-8 md:p-12">';
+
+									// Top section with title and counter
+									echo '<div class="flex justify-between items-start mb-8">';
+									echo '<h3 class="text-4xl md:text-5xl font-black text-[#2d5a3d] uppercase">Choisissez votre box</h3>';
+									echo '<div class="carousel-counter text-2xl font-bold"><span id="carouselCurrent">1</span>/<span id="carouselTotal">' . esc_html($total_carousel) . '</span></div>';
+									echo '</div>';
+
+									// Carousel container
+									echo '<div class="carousel-container overflow-hidden relative">';
 									echo '<div class="carousel-items flex transition-transform duration-300" id="productCarousel">';
 
-									while ($carousel_products->have_posts()) {
-										$carousel_products->the_post();
-										$product = wc_get_product(get_the_ID());
-										$category = get_the_terms(get_the_ID(), 'product_cat');
-										$category_name = ($category && !is_wp_error($category)) ? $category[0]->name : '';
+									foreach ($region_categories as $index => $region_cat) {
+										$region_slug = $region_cat->slug;
+										$region_name = $region_cat->name;
+										$region_image = get_term_meta($region_cat->term_id, 'thumbnail_id', true);
+										$region_image_url = $region_image ? wp_get_attachment_url($region_image) : '';
 										?>
-										<div class="carousel-item w-full flex-shrink-0 px-5 md:px-10 py-12">
-											<div class="flex flex-col md:flex-row items-center justify-between gap-8 md:gap-16 min-h-96">
-												<!-- Left: Product Info -->
-												<div class="carousel-info w-full md:w-2/5 flex flex-col justify-center">
-													<?php if ($category_name): ?>
-														<p class="text-sm font-semibold text-gray-600 mb-2 uppercase tracking-wider"><?php echo esc_html($category_name); ?></p>
-													<?php endif; ?>
-													<h3 class="text-4xl md:text-5xl font-black mb-6 leading-tight text-[#2d5a3d]"><?php the_title(); ?></h3>
-
-													<!-- Add to Cart Form -->
-													<form method="post" class="cart product-add-to-cart-form inline-flex items-center gap-4">
-														<?php
-														$min_qty = $product->get_min_purchase_quantity();
-														$max_qty = $product->get_max_purchase_quantity();
-														$input_value = $min_qty;
-														?>
-														<input type="hidden" name="quantity" value="<?php echo esc_attr($input_value); ?>" />
-														<button type="submit" name="add-to-cart" value="<?php echo esc_attr($product->get_id()); ?>" class="px-8 py-3 bg-[#2d5a3d] text-white rounded-full font-bold uppercase text-sm whitespace-nowrap">
-															Choisir cette box
-														</button>
-													</form>
+										<div class="carousel-item w-full flex-shrink-0" data-region="<?php echo esc_attr($region_slug); ?>">
+											<div class="flex flex-col md:flex-row items-center justify-between gap-8 py-12">
+												<!-- Left: Region Info -->
+												<div class="w-full md:w-1/3 flex flex-col justify-center">
+													<p class="text-sm italic text-gray-600 mb-2">Soleil et convivialité</p>
+													<h4 class="text-5xl md:text-6xl font-black mb-6 leading-tight text-[#2d5a3d]"><?php echo esc_html($region_name); ?></h4>
+													<button type="button" class="select-region px-8 py-3 bg-[#2d5a3d] text-white rounded-full font-bold uppercase text-sm w-fit" data-region="<?php echo esc_attr($region_slug); ?>">
+														Choisir cette box
+													</button>
 												</div>
 
-												<!-- Right/Center: Product Image -->
-												<div class="carousel-image w-full md:w-3/5 flex justify-center md:justify-end">
-													<div class="relative">
-														<?php echo woocommerce_get_product_thumbnail('large'); ?>
+												<!-- Right: Region Image -->
+												<div class="w-full md:w-2/3 flex justify-center md:justify-end">
+													<div class="relative w-80 h-80 md:w-96 md:h-96 flex items-center justify-center">
+														<?php if ($region_image_url) : ?>
+															<img src="<?php echo esc_url($region_image_url); ?>" alt="<?php echo esc_attr($region_name); ?>" class="w-full h-full object-contain">
+														<?php else : ?>
+															<div class="text-gray-400 text-center">
+																<p class="text-lg font-semibold"><?php echo esc_html($region_name); ?></p>
+															</div>
+														<?php endif; ?>
 													</div>
 												</div>
 											</div>
@@ -128,40 +134,16 @@ get_header();
 									echo '</div>'; // .carousel-container
 
 									// Navigation Arrows
-									echo '<button class="carousel-prev absolute left-0 top-1/2 -translate-y-1/2 z-10 px-4 py-2 text-2xl font-bold">‹</button>';
-									echo '<button class="carousel-next absolute right-0 top-1/2 -translate-y-1/2 z-10 px-4 py-2 text-2xl font-bold">›</button>';
-
-									// Counter
-									echo '<div class="carousel-counter text-center mt-6 text-lg font-bold"><span id="carouselCurrent">1</span>/<span id="carouselTotal">' . esc_html($total_carousel) . '</span></div>';
+									echo '<button class="carousel-prev absolute left-0 top-1/2 -translate-y-1/2 z-10 px-4 py-2 text-3xl font-bold text-[#2d5a3d]">‹</button>';
+									echo '<button class="carousel-next absolute right-0 top-1/2 -translate-y-1/2 z-10 px-4 py-2 text-3xl font-bold text-[#2d5a3d]">›</button>';
 
 									echo '</div>'; // .carousel-wrapper
-
-									wp_reset_postdata();
 								}
 							}
 							?>
 						</div>
 
-						<!-- Filters Section -->
-						<h2 class="shop-title text-4xl font-black uppercase pb-8 pt-10 md:text-3xl">Tous nos produits</h2>
-						<?php get_template_part('template-parts/woocommerce/filter-bar'); ?>
-
-						<!-- Products Grid -->
-						<?php
-						if (class_exists('WooCommerce')) {
-							$shortcode = '[products category="' . esc_attr($filtered_category) . '" limit="10" columns="5" paginate="true"]';
-							echo do_shortcode($shortcode);
-						} else {
-							echo '<div class="shop-notice p-5 bg-yellow-100 border border-yellow-300 rounded text-yellow-900 text-center">';
-							echo '<p>' . __('Le plugin WooCommerce n\'est pas activé.', '_tw') . '</p>';
-							echo '</div>';
-						}
-						?>
 					</section><!-- .shop-products -->
-
-					<?php
-					get_template_part('template-parts/content-front/makeyourown-section');
-					?>
 
 					<?php
 					get_template_part('template-parts/content-front/content-subscription');
@@ -204,6 +186,11 @@ get_header();
 	</section><!-- #primary -->
 
 	<script>
+		// Make ajaxurl available if not already defined
+		if (typeof ajaxurl === 'undefined') {
+			var ajaxurl = '<?php echo admin_url('admin-ajax.php'); ?>';
+		}
+
 		(function() {
 			const carousel = document.getElementById('productCarousel');
 			const prevBtn = document.querySelector('.carousel-prev');
@@ -233,28 +220,65 @@ get_header();
 				});
 			}
 
-			// Quantity controls for carousel add to cart
-			const forms = document.querySelectorAll('.carousel-item .product-add-to-cart-form');
-			forms.forEach(function(form) {
-				const minusBtn = form.querySelector('.qty-minus');
-				const plusBtn = form.querySelector('.qty-plus');
-				const qtyInput = form.querySelector('input[name="quantity"]');
-
-				if (!qtyInput || !minusBtn || !plusBtn) return;
-
-				const min = parseInt(qtyInput.getAttribute('min')) || 1;
-				const max = parseInt(qtyInput.getAttribute('max')) || Infinity;
-
-				minusBtn.addEventListener('click', function(e) {
+			// Handle "Choisir cette box" button - filter products by region without page reload
+			const selectRegionBtns = document.querySelectorAll('.select-region');
+			selectRegionBtns.forEach(function(btn) {
+				btn.addEventListener('click', function(e) {
 					e.preventDefault();
-					let qty = parseInt(qtyInput.value) || min;
-					if (qty > min) qtyInput.value = qty - 1;
-				});
+					const region = this.getAttribute('data-region');
+					if (region) {
+						// Get nonce
+						const nonceField = document.querySelector('input[name="localbox_nonce_field"]');
+						const nonce = nonceField ? nonceField.value : '';
 
-				plusBtn.addEventListener('click', function(e) {
-					e.preventDefault();
-					let qty = parseInt(qtyInput.value) || min;
-					if (qty < max) qtyInput.value = qty + 1;
+						console.log('Loading products for region:', region, 'nonce:', nonce);
+
+						// Update URL with pushState (no reload)
+						const currentURL = new URL(window.location);
+						currentURL.searchParams.set('product_cat', 'epicerie-fine');
+						currentURL.searchParams.set('region', region);
+						window.history.pushState({region: region}, '', currentURL.toString());
+
+						// Load products via AJAX
+						fetch(ajaxurl, {
+							method: 'POST',
+							headers: {
+								'Content-Type': 'application/x-www-form-urlencoded',
+							},
+							body: new URLSearchParams({
+								'action': 'localbox_load_filtered_products',
+								'nonce': nonce,
+								'region': region,
+								'category': 'epicerie-fine',
+								'paged': 1
+							})
+						})
+						.then(response => {
+							console.log('Response status:', response.status);
+							return response.json();
+						})
+						.then(data => {
+							console.log('Response data:', data);
+							if (data.success) {
+								// Update products grid
+								const productsSection = document.querySelector('.shop-products');
+								if (productsSection) {
+									const gridParent = productsSection.querySelector('.products-grid')?.parentElement || productsSection;
+									gridParent.innerHTML = data.data.html;
+								}
+
+								// Scroll to products section smoothly
+								if (productsSection) {
+									setTimeout(() => {
+										productsSection.scrollIntoView({behavior: 'smooth', block: 'start'});
+									}, 100);
+								}
+							} else {
+								console.error('AJAX error:', data.data);
+							}
+						})
+						.catch(error => console.error('Fetch error:', error));
+					}
 				});
 			});
 		})();
