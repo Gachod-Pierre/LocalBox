@@ -44,7 +44,7 @@
 				['label' => 'Grand Est', 'href' => 'http://localbox.local/product/box-grand-est/', 'desc' => 'Traditions et terroirs du Grand Est : des pépites locales à partager sans modération.', 'img' => get_template_directory_uri() . '/assets/regionbox/Grand_Est.png'],
 			];
 			?>
-			
+
 			<!-- Partie gauche: Texte -->
 			<div class="lg:w-1/2">
 				<div class="flex justify-between items-start mb-8">
@@ -96,6 +96,80 @@
 </section>
 
 <script type="application/json" id="mb-data"><?php echo wp_json_encode($mb_slides); ?></script>
+
+<script>
+	(function() {
+		const slides = JSON.parse(document.getElementById('mb-data').textContent);
+		let currentIndex = 0;
+
+		function updateCarousel() {
+			const slide = slides[currentIndex];
+
+			// Animate title
+			if (window.gsap) {
+				gsap.fromTo('#mb-title',
+					{ opacity: 0, y: 20 },
+					{ opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }
+				);
+
+				// Animate description
+				gsap.fromTo('#mb-desc',
+					{ opacity: 0, y: 10 },
+					{ opacity: 1, y: 0, duration: 0.6, delay: 0.1, ease: 'power2.out' }
+				);
+
+				// Animate image
+				gsap.fromTo('#mb-image',
+					{ opacity: 0, scale: 0.9 },
+					{ opacity: 1, scale: 1, duration: 0.7, delay: 0.15, ease: 'power2.out' }
+				);
+
+				// Animate counter
+				gsap.fromTo('#mb-counter',
+					{ opacity: 0 },
+					{ opacity: 1, duration: 0.4, ease: 'power2.out' }
+				);
+			}
+
+			document.getElementById('mb-title').textContent = slide.label;
+			document.getElementById('mb-desc').textContent = slide.desc;
+			document.getElementById('mb-link').href = slide.href;
+			document.getElementById('mb-image').src = slide.img;
+			document.getElementById('mb-image').alt = 'Box ' + slide.label;
+			document.getElementById('mb-counter').textContent = (currentIndex + 1) + '/' + slides.length;
+		}
+
+		document.getElementById('mb-prev').addEventListener('click', function() {
+			currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+			updateCarousel();
+		});
+
+		document.getElementById('mb-next').addEventListener('click', function() {
+			currentIndex = (currentIndex + 1) % slides.length;
+			updateCarousel();
+		});
+
+		// Add hover effect on buttons
+		if (window.gsap) {
+			const prevBtn = document.getElementById('mb-prev');
+			const nextBtn = document.getElementById('mb-next');
+
+			prevBtn.addEventListener('mouseenter', function() {
+				gsap.to(this, { scale: 1.15, duration: 0.3, ease: 'power2.out' });
+			});
+			prevBtn.addEventListener('mouseleave', function() {
+				gsap.to(this, { scale: 1, duration: 0.3, ease: 'power2.out' });
+			});
+
+			nextBtn.addEventListener('mouseenter', function() {
+				gsap.to(this, { scale: 1.15, duration: 0.3, ease: 'power2.out' });
+			});
+			nextBtn.addEventListener('mouseleave', function() {
+				gsap.to(this, { scale: 1, duration: 0.3, ease: 'power2.out' });
+			});
+		}
+	})();
+</script>
 
 <!-- Vague décorative en bas -->
 <div class="w-full overflow-hidden pointer-events-none z-10" style="background-color:  #C92358">

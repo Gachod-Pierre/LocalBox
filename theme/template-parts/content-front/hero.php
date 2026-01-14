@@ -4,10 +4,10 @@
     <!-- CONTENU DU HERO -->
     <div class="relative text-center flex flex-col items-center pb-28">
 
-        <img src="<?php echo get_template_directory_uri(); ?>/assets/svg/main-box.svg"
-            class="main-box relative w-[clamp(250px,25vw,500px)]" alt="Box">
+        <img src="<?php echo get_template_directory_uri(); ?>/assets/regionbox/provence_alpes.png"
+            class="main-box relative w-[clamp(320px,32vw,600px)] object-contain mb-6" alt="Box" style="max-height: 550px;">
 
-        <h1 class="hero-title font-extrabold leading-none text-4xl md:text-5xl lg:text-6xl tracking-tight text-black mt-4">
+        <h1 class="hero-title font-extrabold leading-none text-4xl md:text-5xl lg:text-6xl tracking-tight text-black -mt-40">
             LES BOX DE<br>VOS RÉGIONS<br>PRÉFÉRÉES
         </h1>
 
