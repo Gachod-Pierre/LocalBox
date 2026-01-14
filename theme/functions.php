@@ -478,6 +478,44 @@ function localbox_cleanup_empty_shop_params()
 add_action('template_redirect', 'localbox_cleanup_empty_shop_params', 8);
 
 /**
+ * Add region filter to the WP_Query when "region" param is present.
+ * This allows filtering by region + epicerie-fine category simultaneously.
+ */
+function localbox_add_region_tax_query($query)
+{
+	if (is_admin() || !$query->is_main_query()) {
+		return;
+	}
+
+	if (!(function_exists('is_shop') && (is_shop() || is_post_type_archive('product')))) {
+		return;
+	}
+
+	$region = isset($_GET['region']) ? sanitize_text_field(wp_unslash($_GET['region'])) : '';
+	if (!$region) {
+		return;
+	}
+
+	// Get existing tax_query or create new one
+	$tax_query = $query->get('tax_query');
+	if (!is_array($tax_query)) {
+		$tax_query = array();
+	}
+
+	// Add region category to the tax_query
+	$tax_query[] = array(
+		'taxonomy' => 'product_cat',
+		'field' => 'slug',
+		'terms' => $region,
+		'operator' => 'IN',
+	);
+
+	// Set the updated tax_query
+	$query->set('tax_query', $tax_query);
+}
+add_action('pre_get_posts', 'localbox_add_region_tax_query');
+
+/**
  * Strip empty query vars early to avoid WordPress generating a 404
  * when tax query vars like product_cat are present but empty.
  */
@@ -497,16 +535,17 @@ function localbox_clean_empty_shop_request($query_vars)
 		return $query_vars;
 	}
 
-	// Drop empties for known keys (prevents 404)
-	foreach ($query_vars as $k => $v) {
-		$is_tax = in_array($k, array('product_cat', 'product_tag'), true);
-		$is_attr_filter = (strpos($k, 'filter_') === 0) || (strpos($k, 'query_type_') === 0);
-		$is_orderby = ($k === 'orderby');
-		if (!($is_tax || $is_attr_filter || $is_orderby)) {
-			continue;
-		}
-		if ($v === '' || $v === null) {
-			unset($query_vars[$k]);
+// Drop empties for known keys (prevents 404)
+    foreach ($query_vars as $k => $v) {
+        $is_tax = in_array($k, array('product_cat','product_tag'), true);
+        $is_attr_filter = (strpos($k, 'filter_') === 0) || (strpos($k, 'query_type_') === 0);
+        $is_orderby = ($k === 'orderby');
+        $is_region = ($k === 'region');
+        if (!($is_tax || $is_attr_filter || $is_orderby || $is_region)) {
+            continue;
+        }
+        if ($v === '' || $v === null) {
+            unset($query_vars[$k]);
 		}
 	}
 
@@ -626,3 +665,108 @@ function localbox_custom_add_to_cart_loop()
 }
 remove_action('woocommerce_after_shop_loop_item', 'woocommerce_template_loop_add_to_cart', 10);
 add_action('woocommerce_after_shop_loop_item', 'localbox_custom_add_to_cart_loop', 10);
+
+/**
+ * AJAX handler for loading filtered products on construisez-votre-propre-box page
+ */
+function localbox_load_filtered_products()
+{
+	// Verify nonce - but allow nopriv, so check if nonce exists first
+	if (isset($_POST['nonce'])) {
+		if (!wp_verify_nonce($_POST['nonce'], 'localbox_nonce')) {
+			wp_send_json_error(array('message' => 'Nonce verification failed'));
+			return;
+		}
+	}
+
+	$region = isset($_POST['region']) ? sanitize_text_field(wp_unslash($_POST['region'])) : '';
+	$category = isset($_POST['category']) ? sanitize_text_field(wp_unslash($_POST['category'])) : 'epicerie-fine';
+	$paged = isset($_POST['paged']) ? intval($_POST['paged']) : 1;
+	$orderby = isset($_POST['orderby']) ? sanitize_text_field(wp_unslash($_POST['orderby'])) : '';
+
+	// DEBUG: Log the parameters
+	error_log('AJAX localbox_load_filtered_products called with: region=' . $region . ', category=' . $category);
+
+	// Build tax_query
+	$tax_query = array(
+		array(
+			'taxonomy' => 'product_cat',
+			'field' => 'slug',
+			'terms' => $category,
+		),
+	);
+
+	// Add region filter if present
+	if ($region) {
+		$tax_query[] = array(
+			'taxonomy' => 'product_cat',
+			'field' => 'slug',
+			'terms' => $region,
+			'operator' => 'IN',
+		);
+		// Set relation to AND to require both categories
+		$tax_query['relation'] = 'AND';
+	}
+
+	// DEBUG: Log the tax query
+	error_log('Tax Query: ' . json_encode($tax_query));
+
+	// Build orderby
+	$orderby_mapping = array(
+		'price-asc' => 'meta_value_num',
+		'price-desc' => 'meta_value_num',
+	);
+	$product_orderby = isset($orderby_mapping[$orderby]) ? $orderby_mapping[$orderby] : 'date';
+	$product_order = ($orderby === 'price-desc') ? 'DESC' : 'ASC';
+
+	// Query products
+	$products_args = array(
+		'post_type' => 'product',
+		'posts_per_page' => 10,
+		'paged' => $paged,
+		'tax_query' => $tax_query,
+		'orderby' => $product_orderby === 'meta_value_num' ? 'meta_value_num' : 'date',
+		'meta_key' => $product_orderby === 'meta_value_num' ? '_price' : '',
+		'order' => $product_order,
+	);
+
+	$products_query = new WP_Query($products_args);
+
+	ob_start();
+
+	if ($products_query->have_posts()) {
+		echo '<div class="products-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">';
+
+		while ($products_query->have_posts()) {
+			$products_query->the_post();
+			wc_get_template_part('content', 'product');
+		}
+
+		echo '</div>';
+
+		// Pagination
+		if ($products_query->max_num_pages > 1) {
+			echo '<div class="pagination mt-8 flex justify-center gap-2">';
+			echo paginate_links(array(
+				'total' => $products_query->max_num_pages,
+				'current' => max(1, $paged),
+				'prev_text' => '← Précédent',
+				'next_text' => 'Suivant →',
+				'type' => 'array',
+			));
+			echo '</div>';
+		}
+
+		wp_reset_postdata();
+	} else {
+		echo '<div class="no-products p-8 text-center">';
+		echo '<p class="text-lg">' . __('Aucun produit trouvé avec ces critères.', '_tw') . '</p>';
+		echo '</div>';
+	}
+
+	$html = ob_get_clean();
+
+	wp_send_json_success(array('html' => $html));
+}
+add_action('wp_ajax_localbox_load_filtered_products', 'localbox_load_filtered_products');
+add_action('wp_ajax_nopriv_localbox_load_filtered_products', 'localbox_load_filtered_products');
