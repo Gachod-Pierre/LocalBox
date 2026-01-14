@@ -44,7 +44,7 @@
 				['label' => 'Grand Est', 'href' => 'http://localbox.local/product/box-grand-est/', 'desc' => 'Traditions et terroirs du Grand Est : des pépites locales à partager sans modération.', 'img' => get_template_directory_uri() . '/assets/regionbox/Grand_Est.png'],
 			];
 			?>
-
+			
 			<!-- Partie gauche: Texte -->
 			<div class="lg:w-1/2">
 				<div class="flex justify-between items-start mb-8">
