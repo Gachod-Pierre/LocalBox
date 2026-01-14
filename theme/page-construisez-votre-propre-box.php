@@ -153,6 +153,13 @@ get_header();
 
 					</section><!-- .shop-products -->
 
+					<!-- Terminer la composition Button -->
+					<div id="finishBoxContainer" class="flex justify-center py-12 px-5 bg-[#f5f1ed] hidden">
+						<button id="finishBoxButton" type="button" class="px-8 py-3 bg-[#2d5a3d] text-white rounded-full font-bold uppercase text-sm hover:opacity-80 transition-opacity">
+							Terminer la composition
+						</button>
+					</div>
+
 					<?php
 					get_template_part('template-parts/content-front/content-subscription');
 					?>
@@ -242,11 +249,22 @@ get_header();
 
 			// Handle "Choisir cette box" button - filter products by region without page reload
 			const selectRegionBtns = document.querySelectorAll('.select-region');
+			console.log('Found select-region buttons:', selectRegionBtns.length);
 			selectRegionBtns.forEach(function(btn) {
 				btn.addEventListener('click', function(e) {
 					e.preventDefault();
+					console.log('Button clicked!');
+					// Show finish button
+					const finishContainer = document.getElementById('finishBoxContainer');
+					console.log('Finish container:', finishContainer);
+					if (finishContainer) {
+						finishContainer.classList.remove('hidden');
+						console.log('Button should be visible now');
+					}
 					const region = this.getAttribute('data-region');
 					if (region) {
+						// Save region to localStorage
+						localStorage.setItem('selectedRegion', region);
 						// Get nonce
 						const nonceField = document.querySelector('input[name="localbox_nonce_field"]');
 						const nonce = nonceField ? nonceField.value : '';
@@ -300,6 +318,57 @@ get_header();
 						.catch(error => console.error('Fetch error:', error));
 					}
 				});
+			});
+
+			// Handle "Terminer la composition" button
+			const finishButton = document.getElementById('finishBoxButton');
+			if (finishButton) {
+				finishButton.addEventListener('click', function(e) {
+					e.preventDefault();
+					localStorage.removeItem('selectedRegion');
+					location.reload();
+				});
+			}
+
+			// Restore region from localStorage on page load
+			window.addEventListener('load', function() {
+				const savedRegion = localStorage.getItem('selectedRegion');
+				if (savedRegion) {
+					console.log('Restoring region from localStorage:', savedRegion);
+					// Show finish button
+					const finishContainer = document.getElementById('finishBoxContainer');
+					if (finishContainer) {
+						finishContainer.classList.remove('hidden');
+					}
+					// Load products for saved region
+					const nonceField = document.querySelector('input[name="localbox_nonce_field"]');
+					const nonce = nonceField ? nonceField.value : '';
+
+					fetch(ajaxurl, {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/x-www-form-urlencoded',
+						},
+						body: new URLSearchParams({
+							'action': 'localbox_load_filtered_products',
+							'nonce': nonce,
+							'region': savedRegion,
+							'category': 'epicerie-fine',
+							'paged': 1
+						})
+					})
+					.then(response => response.json())
+					.then(data => {
+						if (data.success) {
+							const productsSection = document.querySelector('.shop-products');
+							if (productsSection) {
+								const gridParent = productsSection.querySelector('.products-grid')?.parentElement || productsSection;
+								gridParent.innerHTML = data.data.html;
+							}
+						}
+					})
+					.catch(error => console.error('Fetch error:', error));
+				}
 			});
 		})();
 	</script>
