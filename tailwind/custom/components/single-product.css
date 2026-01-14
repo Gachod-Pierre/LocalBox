@@ -167,6 +167,12 @@
 		border: none !important;
 		width: 100% !important;
 		height: 100% !important;
+		transition: transform 0.3s, box-shadow 0.3s !important;
+	}
+
+	.single-product .related li.product:hover {
+		transform: translateY(-3px) !important;
+		box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1) !important;
 	}
 
 	.single-product .related .woocommerce-loop-product__link {
