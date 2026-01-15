@@ -7,7 +7,7 @@
  */
 ?>
 
-<footer id="colophon" class="bg-black text-white pt-10">
+<footer id="colophon" class="bg-black text-white pt-10 relative">
 
 	<!-- NEWSLETTER (dans le flux, overlap desktop seulement) -->
 	<section class="flex justify-center">

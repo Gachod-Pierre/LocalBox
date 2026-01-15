@@ -18,7 +18,7 @@
 	</div><!-- .entry-content -->
 
 	<!-- Section produits - en dehors de entry-content pour pleine largeur -->
-	<section class="shop-products px-5 py- bg-[#f5f1ed] md:px-10">
+	<section class="shop-products px-5 py- bg-[#f5f1ed] md:px-10 pb-20">
 		<h2 class="shop-title text-5xl font-black uppercase pb-20 pt-10 md:text-4xl">Tous nos produits</h2>
 
 		<?php
@@ -43,9 +43,8 @@
 			}
 		}
 		?>
-
 		<!-- Filtres (liés aux filtres WooCommerce) -->
-		<?php get_template_part('template-parts/woocommerce/filter-bar'); ?>
+		<?php get_template_part('woocommerce/filter-bar'); ?>
 
 		<?php
 		// Afficher les produits (si WooCommerce est actif)
