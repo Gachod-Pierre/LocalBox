@@ -66,21 +66,25 @@
 			<div class="lg:w-1/2 relative">
 				<div class="flex justify-end gap-3 mb-4 mt-12 relative z-20">
 					<button id="mb-prev" class="bg-white/20 hover:bg-white/30 text-white rounded-full p-2 pointer-events-auto" aria-label="Précédent">
-						<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+						<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+						</svg>
 					</button>
 					<button id="mb-next" class="bg-white/20 hover:bg-white/30 text-white rounded-full p-2 pointer-events-auto" aria-label="Suivant">
-						<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+						<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+						</svg>
 					</button>
 				</div>
 
 				<div class="relative">
-					<!-- Cercle blanc derrière l'image -->
-					<div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 bg-white rounded-full ml-4 mt-1" style="width: 400px; height: 400px; z-index: 0; margin-top: -189px;"></div>
+					<!-- Cercle blanc derrière l'image (responsive) -->
+					<div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-full" style="width: clamp(280px, 60vw, 450px); height: clamp(280px, 60vw, 450px); z-index: 0;"></div>
 
 					<img id="mb-image" src="<?php echo esc_url($mb_slides[0]['img']); ?>"
-						 alt="Box <?php echo esc_attr($mb_slides[0]['label']); ?>"
-						 class="w-full max-w-md relative z-10 mr-9"
-					 style="margin-left: 8rem; margin-top: -6rem;">
+						alt="Box <?php echo esc_attr($mb_slides[0]['label']); ?>"
+						class="w-full max-w-xs md:max-w-md relative z-10 mx-auto"
+						style="margin-top: 2rem;">
 				</div>
 			</div>
 
@@ -89,7 +93,9 @@
 
 </section>
 
-<script type="application/json" id="mb-data"><?php echo wp_json_encode($mb_slides); ?></script>
+<script type="application/json" id="mb-data">
+	<?php echo wp_json_encode($mb_slides); ?>
+</script>
 
 <script>
 	(function() {
@@ -101,28 +107,48 @@
 
 			// Animate title
 			if (window.gsap) {
-				gsap.fromTo('#mb-title',
-					{ opacity: 0, y: 20 },
-					{ opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }
-				);
+				gsap.fromTo('#mb-title', {
+					opacity: 0,
+					y: 20
+				}, {
+					opacity: 1,
+					y: 0,
+					duration: 0.6,
+					ease: 'power2.out'
+				});
 
 				// Animate description
-				gsap.fromTo('#mb-desc',
-					{ opacity: 0, y: 10 },
-					{ opacity: 1, y: 0, duration: 0.6, delay: 0.1, ease: 'power2.out' }
-				);
+				gsap.fromTo('#mb-desc', {
+					opacity: 0,
+					y: 10
+				}, {
+					opacity: 1,
+					y: 0,
+					duration: 0.6,
+					delay: 0.1,
+					ease: 'power2.out'
+				});
 
 				// Animate image
-				gsap.fromTo('#mb-image',
-					{ opacity: 0, scale: 0.9 },
-					{ opacity: 1, scale: 1, duration: 0.7, delay: 0.15, ease: 'power2.out' }
-				);
+				gsap.fromTo('#mb-image', {
+					opacity: 0,
+					scale: 0.9
+				}, {
+					opacity: 1,
+					scale: 1,
+					duration: 0.7,
+					delay: 0.15,
+					ease: 'power2.out'
+				});
 
 				// Animate counter
-				gsap.fromTo('#mb-counter',
-					{ opacity: 0 },
-					{ opacity: 1, duration: 0.4, ease: 'power2.out' }
-				);
+				gsap.fromTo('#mb-counter', {
+					opacity: 0
+				}, {
+					opacity: 1,
+					duration: 0.4,
+					ease: 'power2.out'
+				});
 			}
 
 			document.getElementById('mb-title').textContent = slide.label;
@@ -149,17 +175,33 @@
 			const nextBtn = document.getElementById('mb-next');
 
 			prevBtn.addEventListener('mouseenter', function() {
-				gsap.to(this, { scale: 1.15, duration: 0.3, ease: 'power2.out' });
+				gsap.to(this, {
+					scale: 1.15,
+					duration: 0.3,
+					ease: 'power2.out'
+				});
 			});
 			prevBtn.addEventListener('mouseleave', function() {
-				gsap.to(this, { scale: 1, duration: 0.3, ease: 'power2.out' });
+				gsap.to(this, {
+					scale: 1,
+					duration: 0.3,
+					ease: 'power2.out'
+				});
 			});
 
 			nextBtn.addEventListener('mouseenter', function() {
-				gsap.to(this, { scale: 1.15, duration: 0.3, ease: 'power2.out' });
+				gsap.to(this, {
+					scale: 1.15,
+					duration: 0.3,
+					ease: 'power2.out'
+				});
 			});
 			nextBtn.addEventListener('mouseleave', function() {
-				gsap.to(this, { scale: 1, duration: 0.3, ease: 'power2.out' });
+				gsap.to(this, {
+					scale: 1,
+					duration: 0.3,
+					ease: 'power2.out'
+				});
 			});
 		}
 	})();
